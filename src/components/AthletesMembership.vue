@@ -4,6 +4,7 @@
       <base-card>
         <loading v-if="loading" />
         <form-wizard
+          ref="formwizard"
           v-if="items"
           color="#FFA408"
           :title="null"
@@ -13,12 +14,12 @@
           :next-button-text="$t('buttons.next')"
           :back-button-text="$t('buttons.previous')"
           class="wizard-vertical mb-3"
-          @on-complete="updateProfile"
+          @on-complete="message"
         >
           <tab-content
             :title="$t('misc.personal_informartion')"
             icon="feather icon-info"
-            @beforeChange="updateProfile"
+            :before-change="updateProfile"
           >
             <validation-observer v-slot="{}" ref="profileUpdate">
               <div class="form-input">
@@ -28,7 +29,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="English name"
@@ -48,7 +49,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="Arabic name"
@@ -68,7 +69,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
 
                     <input
                       type="text"
@@ -89,7 +90,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <v-select
                       name="gender"
                       :placeholder="$t('inputs.gender')"
@@ -109,7 +110,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="nationality"
@@ -129,7 +130,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="number"
                       name="identity number"
@@ -149,7 +150,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="identity type"
@@ -169,7 +170,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="identity expiry"
@@ -201,7 +202,7 @@
           <tab-content
             :title="$t('misc.personal_picture')"
             icon="feather icon-image"
-            @beforeChange="uploadPortrait"
+            :before-change="uploadPortrait"
           >
             <validation-observer v-slot="{}">
               <div class="form-input">
@@ -278,7 +279,6 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <!-- <font-awesome-icon class="icon" icon="fa-solid fa-user" /> -->
                     <input
                       type="text"
                       name="qualification orgnization"
@@ -297,7 +297,7 @@
                   rules="required|min:3|max:80"
                   v-slot="v"
                 >
-                  <div class="image-holder mx-auto mb-4" v-if="file_portrait">
+                  <div class="image-holder mx-auto mb-4">
                     <img class="w-full h-full" :src="preview" alt="image" />
                   </div>
                   <b-form-file
@@ -353,6 +353,15 @@ export default {
     return {
       loading: false,
       items: null,
+      applicationStatus: {
+        id: null,
+        stage: null,
+        progress: {
+          portraitConfirmation: "",
+          profileConfirmation: "",
+          qualificationConfirmation: "",
+        },
+      },
       file_portrait: null,
       nameAr: "",
       nameEn: "",
@@ -372,8 +381,28 @@ export default {
   mounted() {
     this.fetchProfile();
     this.fetchPortrait();
+    this.getApplicationId();
   },
   methods: {
+    getApplicationId() {
+      this.axios.get("/users-applications/").then((data) => {
+        let requests = data.data.requests;
+        for (let i = 0; i < requests.length; i += 1) {
+          if (requests[i].purpose === "New Athletes Memberships") {
+            this.applicationStatus.id = requests[i].id;
+            this.applicationStatus.stage = requests[i].stage;
+            this.applicationStatus.progress.portraitConfirmation =
+              requests[i].progress.ApplicantPortraitConfirmation;
+            this.applicationStatus.progress.profileConfirmation =
+              requests[i].progress.ApplicantProfileConfirmation;
+            this.applicationStatus.progress.qualificationConfirmation =
+              requests[i].progress.ApplicantQualificationRegistration;
+          }
+        }
+        console.log(this.applicationStatus);
+      });
+    },
+
     fetchPro() {
       this.axios
         .get(`users-applications/new-application/athletes-membership`)
@@ -405,8 +434,8 @@ export default {
         });
     },
     fetchPortrait() {
-      this.axios.get(`users/get-portrait`).then((data) => {
-        console.log(data);
+      this.axios.get(`users/get-portrait`).then(() => {
+        // console.log(data);
       });
     },
     uploadPortrait() {
@@ -415,7 +444,10 @@ export default {
 
       requestFormData.append("portrait_file", this.file_portrait);
       this.axios
-        .post(`users/update-portrait`, requestFormData)
+        .post(
+          `users-applications/confirm-applicant-portrait/${this.applicationStatus.id}`,
+          requestFormData
+        )
         .then(() => {
           this.loading = false;
           this.$refs.profileUpdate.reset();
@@ -424,37 +456,54 @@ export default {
           console.log(err);
           this.loading = false;
         });
+      return true;
     },
+
     updateProfile() {
       this.loading = true;
-      let requestFormData = new FormData();
-
-      requestFormData.append("name_ar", this.nameAr);
-      requestFormData.append("name_en", this.nameEn);
-      requestFormData.append("birthdate", this.birthdate);
-      requestFormData.append("gender", this.gender);
-      requestFormData.append("nationality", this.nationality);
-
-      requestFormData.append("identity_number", this.identityNumber);
-      requestFormData.append("identity_type", this.identityType);
-      requestFormData.append("identity_expiry", this.identityExpiry);
-
-      this.axios
-        .post(`users/update-profile`, requestFormData)
-        .then(() => {
+      this.$refs.profileUpdate.validate().then((success) => {
+        if (!success) {
           this.loading = false;
-          this.$refs.profileUpdate.reset();
-        })
-        .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
+          return false;
+        } else {
+          let requestFormData = new FormData();
+
+          requestFormData.append("name_ar", this.nameAr);
+          requestFormData.append("name_en", this.nameEn);
+          requestFormData.append("birthdate", this.birthdate);
+          requestFormData.append("gender", this.gender);
+          requestFormData.append("nationality", this.nationality);
+
+          requestFormData.append("identity_number", this.identityNumber);
+          requestFormData.append("identity_type", this.identityType);
+          requestFormData.append("identity_expiry", this.identityExpiry);
+
+          this.axios
+            .post(
+              `users-applications/confirm-applicant-profile/${this.applicationStatus.id}`,
+              requestFormData
+            )
+            .then(() => {
+              this.loading = false;
+              this.$refs.profileUpdate.reset();
+            })
+            .catch((err) => {
+              console.log(err);
+              this.loading = false;
+            });
+        }
+      });
+      return true;
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
         this.file_portrait = event.target.files[0];
         this.preview = URL.createObjectURL(this.file_portrait);
       }
+      console.log(this.preview);
+    },
+    message() {
+      console.log("true");
     },
   },
 };

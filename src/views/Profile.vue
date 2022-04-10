@@ -2,7 +2,7 @@
   <section>
     <loading v-if="loading" />
     <div class="relative container mx-auto">
-      <small-card>
+      <small-card v-if="items">
         <validation-observer v-slot="{ invalid }" ref="profileUpdate">
           <div class="form-input">
             <validation-provider
@@ -11,7 +11,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <input
                   type="text"
                   name="English name"
@@ -31,7 +31,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <input
                   type="text"
                   name="Arabic name"
@@ -51,13 +51,12 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
-
-                <input
-                  type="text"
-                  name="birthdate"
+                <font-awesome-icon class="icon" :icon="['far', 'calendar']" />
+                <datepicker
                   v-model="birthdate"
+                  name="birthdate"
                   :placeholder="$t('inputs.birthdate')"
+                  :format="customFormatter"
                 />
               </div>
               <p class="text-red-500 flex mx-auto">
@@ -72,7 +71,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <v-select
                   name="gender"
                   :placeholder="$t('inputs.gender')"
@@ -92,7 +91,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <input
                   type="text"
                   name="nationality"
@@ -113,7 +112,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <input
                   type="number"
                   name="identity number"
@@ -133,7 +132,7 @@
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <input
                   type="text"
                   name="identity type"
@@ -148,17 +147,18 @@
           </div>
           <div class="form-input">
             <validation-provider
-              name="identity_expiry"
+              name="identity expiry"
               rules="required|min:3|max:80"
               v-slot="v"
             >
               <div class="group">
-                <font-awesome-icon class="icon" icon="fa-solid fa-user" />
-                <input
-                  type="text"
-                  name="identity expiry"
+                <font-awesome-icon class="icon" :icon="['far', 'user']" />
+                <datepicker
                   v-model="identityExpiry"
+                  @selected="customFormatter($event, 'identityExpiry')"
+                  name="identity expiry"
                   :placeholder="$t('inputs.identity_expiry')"
+                  :format="customFormatter"
                 />
               </div>
               <p class="text-red-500 flex mx-auto">
@@ -191,8 +191,9 @@
 // import { BCardText } from "bootstrap-vue";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import Loading from "../components/Loading.vue";
+import Datepicker from "vuejs-datepicker";
 export default {
-  components: { Loading },
+  components: { Loading, Datepicker },
   name: "Profile",
   data() {
     return {
@@ -242,11 +243,17 @@ export default {
             this.identityExpiry = dataProfile.identity_expiry;
           }
         })
+        .catch((err) => {
+          if (err.response.status == 401) {
+            this.$router.replace("/login");
+          }
+        })
         .finally(() => {
           this.items = true;
           this.loading = false;
         });
     },
+
     fetchPortrait() {
       this.axios.get(`users/get-portrait`).then((data) => {
         console.log(data);
@@ -274,13 +281,16 @@ export default {
 
       requestFormData.append("name_ar", this.nameAr);
       requestFormData.append("name_en", this.nameEn);
-      requestFormData.append("birthdate", this.birthdate);
+      requestFormData.append("birthdate", this.customFormatter(this.birthdate));
       requestFormData.append("gender", this.gender);
       requestFormData.append("nationality", this.nationality);
 
       requestFormData.append("identity_number", this.identityNumber);
       requestFormData.append("identity_type", this.identityType);
-      requestFormData.append("identity_expiry", this.identityExpiry);
+      requestFormData.append(
+        "identity_expiry",
+        this.customFormatter(this.identityExpiry)
+      );
 
       this.axios
         .post(`users/update-profile`, requestFormData)
@@ -292,6 +302,20 @@ export default {
           console.log(err);
           this.loading = false;
         });
+    },
+    customFormatter(d) {
+      let date = new Date(d);
+      let day = "" + date.getDate();
+      let month = "" + (date.getMonth() + 1);
+      let year = date.getFullYear();
+
+      if (day.length < 2) {
+        day = `0${day}`;
+      }
+      if (month.length < 2) {
+        month = `0${month}`;
+      }
+      return `${year}-${month}-${day}`;
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
@@ -338,6 +362,7 @@ export default {
       left: 10px;
       color: #416f09;
       font-size: 20px;
+      z-index: 10;
     }
   }
   .custom-file {

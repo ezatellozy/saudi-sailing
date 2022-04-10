@@ -20,12 +20,12 @@
       <div class="options">
         <div class="option">
           <router-link class="option" :to="{ name: 'Profile' }">
-            <font-awesome-icon icon="fa-solid fa-user" />
+            <font-awesome-icon :icon="['fas', 'user']" />
             <p>Profile</p>
           </router-link>
         </div>
         <div @click="signOut" class="option">
-          <font-awesome-icon icon="fa-solid fa-door-open" />
+          <font-awesome-icon :icon="['fas', 'door-open']" />
           <p>Logout</p>
         </div>
       </div>

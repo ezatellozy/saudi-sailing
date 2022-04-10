@@ -28,7 +28,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="English name"
@@ -48,7 +48,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="Arabic name"
@@ -68,7 +68,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
 
                     <input
                       type="text"
@@ -89,7 +89,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <v-select
                       name="gender"
                       :placeholder="$t('inputs.gender')"
@@ -109,7 +109,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="nationality"
@@ -129,7 +129,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="number"
                       name="identity number"
@@ -149,7 +149,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="identity type"
@@ -169,7 +169,7 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <font-awesome-icon class="icon" icon="fa-solid fa-user" />
+                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                     <input
                       type="text"
                       name="identity expiry"
@@ -278,7 +278,6 @@
                   v-slot="v"
                 >
                   <div class="group">
-                    <!-- <font-awesome-icon class="icon" icon="fa-solid fa-user" /> -->
                     <input
                       type="text"
                       name="qualification orgnization"
@@ -348,15 +347,22 @@ import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import Loading from "../components/Loading.vue";
 export default {
   components: { FormWizard, TabContent, BFormFile, BCardText, Loading },
-  name: "Profile",
+  name: "InstructorLicense",
   data() {
     return {
       loading: false,
       items: null,
-      qualificationTitle: "",
+      applicationStatus: {
+        id: null,
+        stage: null,
+        progress: {
+          portraitConfirmation: "",
+          profileConfirmation: "",
+          qualificationConfirmation: "",
+        },
+      },
       file_portrait: null,
       nameAr: "",
-      qualificationOrg: "",
       nameEn: "",
       birthdate: "",
       gender: "",
@@ -366,17 +372,36 @@ export default {
       identityExpiry: "",
       preview: null,
       identity_file: "",
+      qualificationTitle: "",
+      qualificationOrg: "",
       genderList: ["Male", "Female"],
     };
   },
   mounted() {
     this.fetchProfile();
     this.fetchPortrait();
+    this.getApplicationId();
+    this.fetchPro();
   },
   methods: {
+    getApplicationId() {
+      this.axios.get("/users-applications/").then((data) => {
+        let requests = data.data.requests;
+        for (let i = 0; i < requests.length; i += 1) {
+          if (requests[i].purpose === "New Athletes Memberships") {
+            console.log("New Athletes Memberships :", requests[i].id);
+          } else if (requests[i].purpose === "New Instructor License") {
+            console.log("New Instructor License :", requests[i].id);
+          }
+        }
+        // console.log(data);
+        this.applicationStatus.id = data.requests.id;
+      });
+    },
+
     fetchPro() {
       this.axios
-        .get(`users-applications/new-application/athletes-membership`)
+        .get(`users-applications/new-application/instructor-license`)
         .then((data) => {
           console.log(data);
         });
@@ -405,8 +430,8 @@ export default {
         });
     },
     fetchPortrait() {
-      this.axios.get(`users/get-portrait`).then((data) => {
-        console.log(data);
+      this.axios.get(`users/get-portrait`).then(() => {
+        // console.log(data);
       });
     },
     uploadPortrait() {
@@ -420,8 +445,8 @@ export default {
           this.loading = false;
           this.$refs.profileUpdate.reset();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
           this.loading = false;
         });
     },
@@ -445,8 +470,8 @@ export default {
           this.loading = false;
           this.$refs.profileUpdate.reset();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
           this.loading = false;
         });
     },

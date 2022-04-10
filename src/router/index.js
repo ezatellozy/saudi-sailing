@@ -10,31 +10,49 @@ const routes = [
     path: "/",
     name: "Home",
     component: () => import("@/views/Home.vue"),
+    meta: {
+      title: "Home",
+    },
   },
   {
     path: "/events",
     name: "Events",
     component: () => import("@/views/Events.vue"),
+    meta: {
+      title: "Events",
+    },
   },
   {
     path: "/news",
     name: "News",
     component: () => import("@/views/News.vue"),
+    meta: {
+      title: "News",
+    },
   },
   {
     path: "/about",
     name: "About",
     component: () => import("@/views/About.vue"),
+    meta: {
+      title: "About",
+    },
   },
   {
     path: "/license",
     name: "license",
     component: () => import("@/components/Accordian.vue"),
+    meta: {
+      title: "License",
+    },
   },
   {
     path: "/contact-us",
     name: "contact-us",
     component: () => import("@/components/Contact.vue"),
+    meta: {
+      title: "Contact us",
+    },
   },
 
   {
@@ -43,6 +61,7 @@ const routes = [
     component: () => import("@/views/Login.vue"),
     meta: {
       guest: true,
+      title: "login",
     },
   },
   {
@@ -51,6 +70,7 @@ const routes = [
     component: () => import("@/views/Settings.vue"),
     meta: {
       auth: true,
+      title: "settings",
     },
     children: [
       {
@@ -59,6 +79,7 @@ const routes = [
         component: () => import("@/views/Profile.vue"),
         meta: {
           auth: true,
+          title: "Profile",
         },
       },
       {
@@ -67,6 +88,7 @@ const routes = [
         component: () => import("@/components/AthletesMembership.vue"),
         meta: {
           auth: true,
+          title: "AthletesMembership",
         },
       },
       {
@@ -75,6 +97,7 @@ const routes = [
         component: () => import("@/components/InstructorLicense.vue"),
         meta: {
           auth: true,
+          title: "InstructorLicense",
         },
       },
     ],
@@ -85,6 +108,7 @@ const routes = [
     component: () => import("@/views/Register.vue"),
     meta: {
       guest: true,
+      title: "Register",
     },
   },
   {
@@ -93,6 +117,7 @@ const routes = [
     component: () => import("@/views/ForgotPassword.vue"),
     meta: {
       guest: true,
+      title: "ForgotPassword",
     },
   },
 
@@ -100,6 +125,9 @@ const routes = [
     path: "*",
     name: "Not Found",
     component: () => import("@/views/NotFound.vue"),
+    meta: {
+      title: "Not Found",
+    },
   },
 ];
 
@@ -121,6 +149,10 @@ const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err);
 };
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | SaudiSailing`;
+  next();
+});
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters.isLogedIn) {

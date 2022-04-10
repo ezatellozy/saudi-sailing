@@ -113,7 +113,7 @@ export default {
           this.$store.commit("setUser", data.data.user);
           this.$store.commit("setToken", data.data.token);
           setTimeout(() => {
-            this.$router.replace("settings/profile");
+            window.location.reload();
           }, 1000);
         })
         .catch((errors) => {

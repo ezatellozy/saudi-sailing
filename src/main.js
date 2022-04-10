@@ -4,11 +4,13 @@ import router from "@/router";
 import store from "@/store";
 import "@/style/main.scss";
 import Vue from "vue";
-
 import i18n from "./i18n";
 import BaseCard from "./components/ui/BaseCard.vue";
 import SmallCard from "./components/ui/Card.vue";
 import vSelect from "vue-select";
+import VueFormWizard from "vue-form-wizard";
+import "vue-form-wizard/dist/vue-form-wizard.min.css";
+Vue.use(VueFormWizard);
 
 Vue.component("v-select", vSelect);
 

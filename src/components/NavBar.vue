@@ -13,7 +13,7 @@
             <router-link to="/about" class="link">{{
               $t("buttons.federation")
             }}</router-link>
-            <router-link to="/events" class="link">{{
+            <router-link to="/events" v-if="false" class="link">{{
               $t("buttons.events")
             }}</router-link>
             <router-link to="/contact-us" class="link">{{

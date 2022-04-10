@@ -12,6 +12,7 @@ export default {
 
 <style lang="scss">
 .loading {
+  left: 0;
   top: 0;
   z-index: 101;
   height: 100%;
