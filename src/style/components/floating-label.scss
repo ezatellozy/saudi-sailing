@@ -1,74 +1,80 @@
-$main-color: #2d4f05;
-$second-color: #ffa408;
-.form-container {
-  width: 400px;
-  .form-inputs {
-    margin-bottom: 30px;
-    .group {
-      position: relative;
-
-      &:last-child {
-        margin-top: 30px;
-      }
-    }
-
-    .inputMaterial {
-      padding: 10px;
-      display: block;
-      border: none;
-      border-bottom: 2px solid;
-      background: transparent;
+.form-input {
+  position: relative;
+  > span > label {
+    top: -15px;
+    position: absolute;
+    left: 30px;
+    background: white;
+    z-index: 10;
+    padding: 0 10px;
+    color: #444;
+  }
+  margin-bottom: 10px;
+  .group {
+    position: relative;
+    margin-bottom: 10px;
+    input,
+    select {
+      background-color: transparent;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      padding: 10px 30px 10px 35px;
+      @apply border border-primary;
       width: 100%;
-      text-align: center;
-
-      &::placeholder {
-        color: $main-color;
-        text-align: center;
-        font-weight: 600;
-
-        transition: 0 ease all 0.2s;
-      }
-
       &:focus {
-        outline: none;
         &::placeholder {
-          color: transparent;
-          transition: 0 ease all 0.2s;
+          visibility: hidden;
         }
       }
+      &:focus ~ label,
+      &:not(:placeholder-shown) ~ label {
+        top: -15px;
+        opacity: 1;
+        visibility: visible !important;
+      }
+    }
+    .icon {
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      color: #416f09;
+      font-size: 20px;
+      z-index: 10;
     }
 
     label {
-      font-weight: bold;
-      color: $main-color;
-      position: absolute;
-      left: 0px;
-      right: 0px;
-      top: 0px;
+      transition: all 0.3s;
       visibility: hidden;
-      transition: 0.2s ease all;
-      margin: 0;
-
-      &:focus {
-        top: -10px;
-        outline: none;
-      }
-    }
-
-    .inputMaterial:focus ~ label,
-    .inputMaterial:not(:placeholder-shown) ~ label {
-      top: -10px;
-      visibility: visible;
+      position: absolute;
+      opacity: 0;
+      left: 30px;
+      padding: 0 10px;
+      transition: 0.3s all;
+      background: white;
+      color: #4e4e4e;
     }
   }
+  .custom-file {
+    @apply border border-primary rounded-lg py-2 px-4;
 
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    font-size: 12px;
+    .custom-file-label {
+      display: none;
+    }
   }
+}
 
-  input[type="number"] {
-    -moz-appearance: textfield;
+.is-rtl {
+  .group {
+    input {
+      padding: 10px 35px 10px 30px;
+    }
+    .icon {
+      right: 10px;
+    }
+    label {
+      left: unset;
+      right: 30px;
+    }
   }
 }

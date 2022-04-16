@@ -29,6 +29,8 @@
     "interestedNews": "Interested News"
   },
   "inputs": {
+    "male": "Male",
+    "female": "Female",
     "qualification": "Qualification",
     "qualification_orgnization": "Qualification organization",
     "english_name": "Full Applicant Name in english",

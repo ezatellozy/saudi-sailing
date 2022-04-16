@@ -30,6 +30,8 @@
     "interestedNews": "أخبار قد تهمك"
   },
   "inputs": {
+    "male": "ذكر",
+    "female": "أنثي",
     "qualification": "المؤهل",
     "qualification_orgnization": "الجهة المصدرة",
     "english_name": "الاسم بالكامل باللغة الانجليزية",

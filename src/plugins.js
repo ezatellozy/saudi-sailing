@@ -36,11 +36,11 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("validation-provider", ValidationProvider);
 Vue.component("validation-observer", ValidationObserver);
 
-if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "https://sailsaudi.com/api";
-} else {
-  axios.defaults.baseURL = "https://ssf.almotamayiz.com/api/";
-}
+axios.defaults.baseURL = "https://sailsaudi.com/api";
+// if (process.env.NODE_ENV === "production") {
+// } else {
+// axios.defaults.baseURL = "https://ssf.almotamayiz.com/api/";
+// }
 
 // Vue.config.productionTip = false;
 if (store.state.token) {

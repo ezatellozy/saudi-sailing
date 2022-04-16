@@ -155,7 +155,7 @@ export default {
       data.append("mobile", this.phone);
 
       this.axios
-        .post("https://ssf.almotamayiz.com/api/users/signup", data)
+        .post("users/signup", data)
         .then((res) => {
           console.log(res);
         })

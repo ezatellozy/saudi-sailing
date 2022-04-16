@@ -2,8 +2,12 @@
   <section>
     <loading v-if="loading" />
     <div class="relative container mx-auto">
-      <small-card v-if="items">
-        <validation-observer v-slot="{ invalid }" ref="profileUpdate">
+      <small-card>
+        <validation-observer
+          class="form-container"
+          v-slot="{ invalid }"
+          ref="profileUpdate"
+        >
           <div class="form-input">
             <validation-provider
               name="English name"
@@ -12,12 +16,17 @@
             >
               <div class="group">
                 <font-awesome-icon class="icon" :icon="['far', 'user']" />
+
                 <input
                   type="text"
                   name="English name"
+                  id="english-name"
                   v-model="nameEn"
                   :placeholder="$t('inputs.english_name')"
                 />
+                <label for="english-name">{{
+                  $t("inputs.english_name")
+                }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -35,9 +44,11 @@
                 <input
                   type="text"
                   name="Arabic name"
+                  id="arabic-name"
                   v-model="nameAr"
                   :placeholder="$t('inputs.arabic_name')"
                 />
+                <label for="arabic-name">{{ $t("inputs.arabic_name") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -50,6 +61,9 @@
               rules="required|min:3|max:80"
               v-slot="v"
             >
+              <label class="relative visible">{{
+                $t("inputs.birthdate")
+              }}</label>
               <div class="group">
                 <font-awesome-icon class="icon" :icon="['far', 'calendar']" />
                 <datepicker
@@ -72,12 +86,11 @@
             >
               <div class="group">
                 <font-awesome-icon class="icon" :icon="['far', 'user']" />
-                <v-select
-                  name="gender"
-                  :placeholder="$t('inputs.gender')"
-                  :options="genderList"
-                  v-model="gender"
-                ></v-select>
+                <select v-model="gender">
+                  <option value="male">{{ $t("inputs.male") }}</option>
+                  <option value="female">{{ $t("inputs.female") }}</option>
+                </select>
+                <label>{{ $t("inputs.gender") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -98,6 +111,7 @@
                   v-model="nationality"
                   :placeholder="$t('inputs.nationality')"
                 />
+                <label>{{ $t("inputs.nationality") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -119,6 +133,7 @@
                   v-model="identityNumber"
                   :placeholder="$t('inputs.identity_number')"
                 />
+                <label>{{ $t("inputs.identity_number") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -139,6 +154,7 @@
                   v-model="identityType"
                   :placeholder="$t('inputs.identity_type')"
                 />
+                <label>{{ $t("inputs.identity_type") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -151,6 +167,9 @@
               rules="required|min:3|max:80"
               v-slot="v"
             >
+              <label class="relative visible">{{
+                $t("inputs.identity_expiry")
+              }}</label>
               <div class="group">
                 <font-awesome-icon class="icon" :icon="['far', 'user']" />
                 <datepicker
@@ -160,6 +179,7 @@
                   :placeholder="$t('inputs.identity_expiry')"
                   :format="customFormatter"
                 />
+                <label>{{ $t("inputs.identity_expiry") }}</label>
               </div>
               <p class="text-red-500 flex mx-auto">
                 {{ v.errors[0] }}
@@ -203,14 +223,13 @@ export default {
       nameAr: "",
       nameEn: "",
       birthdate: "",
-      gender: "",
+      gender: "male",
       nationality: "",
       identityNumber: "",
       identityType: "",
       identityExpiry: "",
       preview: null,
       identity_file: "",
-      genderList: ["Male", "Female"],
     };
   },
   mounted() {
@@ -241,6 +260,8 @@ export default {
             this.identityNumber = dataProfile.identity_number;
             this.identityType = dataProfile.identity_type;
             this.identityExpiry = dataProfile.identity_expiry;
+          } else {
+            this.items = dataProfile;
           }
         })
         .catch((err) => {
@@ -330,66 +351,5 @@ export default {
 .image-holder {
   width: 200px;
   height: 150px;
-}
-.form-input {
-  margin-bottom: 10px;
-  .group {
-    .vs__selected {
-      position: absolute;
-      top: 10px;
-      left: 30px;
-      right: unset;
-    }
-    position: relative;
-    .vs__dropdown-toggle {
-      position: relative;
-      cursor: pointer;
-      border: none;
-    }
-    .vs__search {
-      color: gray !important;
-    }
-    input {
-      margin-bottom: 5px;
-      border-radius: 10px;
-      padding: 10px 20px 10px 35px;
-      @apply border border-primary;
-      width: 100%;
-    }
-    .icon {
-      position: absolute;
-      top: 15px;
-      left: 10px;
-      color: #416f09;
-      font-size: 20px;
-      z-index: 10;
-    }
-  }
-  .custom-file {
-    @apply border border-primary rounded-lg py-2 px-4;
-
-    font-size: 12px;
-    .custom-file-label {
-      display: none;
-    }
-  }
-}
-
-.is-rtl {
-  .group {
-    .vs__dropdown-toggle {
-      flex-direction: row-reverse;
-    }
-    .vs__selected {
-      left: unset;
-      right: 30px;
-    }
-    input {
-      padding: 10px 35px 10px 20px;
-    }
-    .icon {
-      right: 10px;
-    }
-  }
 }
 </style>
