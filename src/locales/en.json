@@ -75,8 +75,13 @@
   },
   "misc": {
     "personal_informartion": "Personal informartion",
+    "portrait": "Portrait",
+    "password": "Password",
     "athletes_membership": " Athletes Membership",
     "instructor_license": "Instructor License",
+    "dashboard": "Dashboard",
+    "settings": "settings",
+    "myAccount": "My account",
     "identity": "Identity",
     "personal_picture": "Personal picture",
     "qualifications": "Qualifications",

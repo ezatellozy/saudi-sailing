@@ -76,6 +76,11 @@
   },
   "misc": {
     "personal_informartion": "البيانات الشخصية",
+    "dashboard": "لوحة التحكم",
+    "portrait": "الصوره الشخصية",
+    "password": "كلمة المرور",
+    "settings": "الإعدادات",
+    "myAccount": "حسابي",
     "identity": "الهويه",
     "athletes_membership": "طلب تسجيل لاعب",
     "instructor_license": "طلب تسجيل مدرب",

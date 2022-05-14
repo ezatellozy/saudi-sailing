@@ -1,58 +1,184 @@
 <template>
-  <div class="settings flex justify-between flex-wrap">
-    <div class="side-menu w-full md:w-1/4 px-2">
-      <base-card>
-        <router-link class="link" :to="{ name: 'Profile' }">
-          {{ $t("misc.personal_informartion") }}
-        </router-link>
-      </base-card>
-      <base-card>
-        <router-link class="link" :to="{ name: 'AthletesMembership' }">
-          {{ $t("misc.athletes_membership") }}
-        </router-link>
-      </base-card>
-      <base-card>
-        <router-link class="link" :to="{ name: 'InstructorLicense' }">
-          {{ $t("misc.instructor_license") }}
-        </router-link>
-      </base-card>
+  <div class="settings">
+    <div class="title">
+      <img src="../assets/header-bg1.svg" alt="" />
+      <h2 class="">{{ $t("misc.settings") }}</h2>
     </div>
-    <div class="content w-full md:w-3/4 flex-1 px-4">
-      <router-view></router-view>
+    <div class="setting border mt-3">
+      <div class="container flex justify-between flex-wrap mx-auto">
+        <div class="side-menu w-full md:w-1/4 px-2">
+          <h3 class="title">
+            {{ $t("misc.myAccount") }}
+          </h3>
+          <ul>
+            <li>
+              <router-link class="link" :to="{ name: 'dashboard' }">
+                {{ $t("misc.dashboard") }}
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'profile' }" class="link">
+                {{ $t("misc.personal_informartion") }}
+              </router-link>
+            </li>
+            <li>
+              <button class="link" @click="newAthletesMembershipsApplication">
+                {{ $t("misc.athletes_membership") }}
+              </button>
+            </li>
+            <li>
+              <button class="link" @click="newInstructorLicenseApplication">
+                {{ $t("misc.instructor_license") }}
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="content w-full md:w-3/4 p-3">
+          <router-view />
+
+          <!-- <Profile v-if="profile" />
+          <AthletesMembership :item="athletesMemberships" v-if="athletes" />
+          <InstructorLicense :item="instructorLicense" v-if="instructor" /> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import BaseCard from "../components/ui/BaseCard.vue";
+// import Profile from "./Profile.vue";
+// import AthletesMembership from "@/components/AthletesMembership.vue";
+// import InstructorLicense from "@/components/InstructorLicense.vue";
+// import Dashboard from "../components/Dashboard.vue";
 export default {
-  components: { BaseCard },
+  // components: { Dashboard },
+  data() {
+    return {
+      athletes: false,
+      instructor: false,
+      profile: false,
+      dashboard: true,
+      athletesMemberships: null,
+      instructorLicense: null,
+    };
+  },
+  mounted() {
+    this.getApplication();
+  },
+  methods: {
+    newAthletesMembershipsApplication() {
+      if (this.athletesMemberships) {
+        this.$router.push(
+          this.$route.fullPath.replace(
+            `${this.$route.path}`,
+            `/settings/athletes-membership/${this.athletesMemberships.id}`
+          )
+        );
+      } else {
+        this.axios
+          .get("/users-applications/new-application/athletes-membership")
+          .then((data) => {
+            let request = data.data.request;
+            this.athletesMemberships = request;
+            this.$router.push(
+              this.$route.fullPath.replace(
+                `${this.$route.path}`,
+                `/settings/athletes-membership/${this.athletesMemberships.id}`
+              )
+            );
+          });
+      }
+    },
+    newInstructorLicenseApplication() {
+      if (this.instructorLicense) {
+        this.$router.push(
+          this.$route.fullPath.replace(
+            `${this.$route.path}`,
+            `/settings/instructor-license/${this.instructorLicense.id}`
+          )
+        );
+      } else {
+        this.axios
+          .get("/users-applications/new-application/athletes-membership")
+          .then((data) => {
+            let request = data.data.request;
+            this.instructorLicense = request;
+            this.$router.push(
+              this.$route.fullPath.replace(
+                `${this.$route.path}`,
+                `/settings/instructor-license/${this.instructorLicense.id}`
+              )
+            );
+          });
+      }
+    },
+    getApplication() {
+      this.axios.get("/users-applications/").then((data) => {
+        let requests = data.data.requests;
+        if (requests.length) {
+          let athletesMemberships = requests.filter((el) => {
+            return el.purpose == "New Athletes Memberships";
+          });
+          let instructorLicense = requests.filter((el) => {
+            return el.purpose == "New Instructor License";
+          });
+          this.athletesMemberships = athletesMemberships[0];
+          this.instructorLicense = instructorLicense[0];
+        }
+      });
+    },
+    openTabs(tab) {
+      this.athletes = false;
+      this.instructor = false;
+      this.profile = false;
+      this.dashboard = false;
+      this[tab] = true;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .settings {
   .side-menu {
-    .card {
-      margin: 10px auto;
-      padding: 0;
-      @apply flex items-center justify-center border border-primary overflow-hidden;
-      .link {
-        @apply text-center w-full text-primary p-4 font-bold text-lg hover:bg-primary hover:text-white;
-        transition: 0.3s all;
+    padding: 10px 0;
+    border-right: 1px solid #e5e7eb;
+    border-left: unset;
+    @media (max-width: 768px) {
+      border-right: unset;
+      border-bottom: 1px solid #e5e7eb;
+      border-left: unset;
+    }
+    .link {
+      padding: 10px;
+      transition: 0.3s all;
+      color: #777;
+      display: inline-block;
+      &:hover {
+        @apply text-primary;
+        transform: translateX(10px);
       }
     }
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    width: 250px;
-    margin: 2rem auto;
-    border-radius: 10px;
-    @media (max-width: 992px) {
-      width: 100%;
-    }
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+
+    max-width: 250px;
   }
-  .router-link-exact-active.router-link-active {
-    @apply bg-primary;
-    color: white !important;
+}
+.is-rtl {
+  .settings {
+    .side-menu {
+      border-left: 1px solid #e5e7eb;
+      border-right: unset;
+      @media (max-width: 768px) {
+        border-left: unset;
+        max-width: 100%;
+      }
+      .link {
+        &:hover {
+          transform: translateX(-10px);
+        }
+      }
+    }
   }
 }
 </style>

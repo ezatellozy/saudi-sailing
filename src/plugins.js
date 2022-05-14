@@ -37,12 +37,7 @@ Vue.component("validation-provider", ValidationProvider);
 Vue.component("validation-observer", ValidationObserver);
 
 axios.defaults.baseURL = "https://sailsaudi.com/api";
-// if (process.env.NODE_ENV === "production") {
-// } else {
-// axios.defaults.baseURL = "https://ssf.almotamayiz.com/api/";
-// }
 
-// Vue.config.productionTip = false;
 if (store.state.token) {
   axios.defaults.headers.common["Authorization"] =
     "Bearer " + store.state.token;

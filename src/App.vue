@@ -75,6 +75,36 @@ export default {
 </script>
 
 <style lang="scss">
+div.title {
+  position: relative;
+  min-height: 100px;
+  max-height: 100px;
+  > img {
+    position: absolute;
+    top: 0;
+    left: 45%;
+    transform: translateX(-45%);
+    min-height: 100px;
+    max-height: 100px;
+    z-index: -1;
+  }
+  h2 {
+    line-height: 90px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+h3.title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+  margin: 10px 0 20px;
+  @apply text-primary;
+}
+
 .fade-in-enter,
 .fade-in-leave-to {
   opacity: 0;

@@ -2,6 +2,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
+// import VueI18n from "vue-i18n";
 
 Vue.use(VueRouter);
 
@@ -76,7 +77,7 @@ const routes = [
     children: [
       {
         path: "profile",
-        name: "Profile",
+        name: "profile",
         component: () => import("@/views/Profile.vue"),
         meta: {
           auth: true,
@@ -84,7 +85,7 @@ const routes = [
         },
       },
       {
-        path: "athletes-membership",
+        path: "athletes-membership/:id",
         name: "AthletesMembership",
         component: () => import("@/components/AthletesMembership.vue"),
         meta: {
@@ -93,12 +94,21 @@ const routes = [
         },
       },
       {
-        path: "instructor-license",
+        path: "instructor-license/:id",
         name: "InstructorLicense",
         component: () => import("@/components/InstructorLicense.vue"),
         meta: {
           auth: true,
           title: "InstructorLicense",
+        },
+      },
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: () => import("@/components/Dashboard.vue"),
+        meta: {
+          auth: true,
+          title: "dashboard",
         },
       },
     ],

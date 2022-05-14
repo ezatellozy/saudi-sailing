@@ -35,7 +35,6 @@
         </p>
       </validation-provider>
     </div>
-
     <div class="flex justify-center">
       <button
         class="border rounded-xl px-4 py-2 font-bold text-lg bg-secondary text-white border-secondary"
@@ -54,22 +53,24 @@
 
 export default {
   //   components: { BFormFile },
-  props: ["application"],
+  props: ["id"],
   data() {
     return {
       preview: null,
       file_portrait: null,
     };
   },
+  mounted() {
+    this.getPortrait();
+  },
   methods: {
     uploadPortrait() {
       this.loading = true;
       let requestFormData = new FormData();
-
       requestFormData.append("portrait_file", this.file_portrait);
       this.axios
         .post(
-          `users-applications/confirm-applicant-portrait/${this.application.id}`,
+          `users-applications/confirm-applicant-portrait/${this.id}`,
           requestFormData
         )
         .then((data) => {
@@ -78,8 +79,6 @@ export default {
           if (data.data.status == "Success") {
             this.$emit("goStep", 2);
           }
-          // this.$refs.profilePortrait.reset();
-          // this.$emit("goStep", 2);
         })
         .catch((err) => {
           console.log(err);
@@ -89,18 +88,30 @@ export default {
       return true;
     },
     previewMainMedia(event) {
-      console.log(event);
       this.file_portrait = event.target.files[0];
       this.preview = URL.createObjectURL(this.file_portrait);
+    },
+    getPortrait() {
+      this.axios
+        .get(`users-applications/get_applicant_portrait/${this.id}`)
+        .then((data) => {
+          this.preview = data.data.applicant_portrait.link;
+          this.file_portrait = true;
+          console.log(this.preview);
+        });
     },
   },
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .image-holder {
   width: 200px;
   height: 150px;
+  img {
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 input[type="file"] {
   position: relative !important;

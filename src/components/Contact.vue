@@ -1,10 +1,10 @@
 <template>
   <section>
-    <div class="contact-us relative">
+    <div class="title">
       <img src="../assets/header-bg1.svg" alt="" />
-      <h3 class="text-primary font-bold text-center my-5 text-lg md:text-xl">
-        Contact us
-      </h3>
+      <h2 class="">Contact us</h2>
+    </div>
+    <div class="contact-us relative">
       <small-card>
         <div class="p-4">
           <validation-observer v-slot="{ invalid }">

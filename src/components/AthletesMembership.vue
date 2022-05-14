@@ -1,87 +1,69 @@
 <template>
   <section>
     <div class="relative container mx-auto">
-      <base-card>
-        <loading v-if="loading" />
-
-        <div class="mt-5 register mx-auto d-flex justify-content-center">
-          <div class="flex w-full steps justify-between">
-            <div
-              class="step"
-              @click="
-                () => {
-                  step1 = true;
-                  step2 = false;
-                  step3 = false;
-                }
-              "
-              :class="step1 ? 'active' : ''"
-            >
-              <a href="#" class="">
-                <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
-              </a>
-            </div>
-            <div
-              class="step"
-              @click="
-                () => {
-                  step2 = true;
-                  step1 = false;
-                  step3 = false;
-                }
-              "
-              :class="step2 ? 'active' : ''"
-            >
-              <a href="#" class="">
-                <font-awesome-icon
-                  :icon="['fas', 'camera']"
-                ></font-awesome-icon>
-              </a>
-            </div>
-            <div
-              class="step"
-              @click="
-                () => {
-                  step3 = true;
-                  step2 = false;
-                  step1 = false;
-                }
-              "
-              :class="step3 ? 'active' : ''"
-            >
-              <a href="#" class="">
-                <font-awesome-icon
-                  :icon="['fas', 'file-pdf']"
-                ></font-awesome-icon>
-              </a>
-            </div>
+      <loading v-if="loading" />
+      <div class="mt-5 register mx-auto d-flex justify-content-center">
+        <div class="flex w-full steps justify-between">
+          <div
+            class="step"
+            @click="
+              () => {
+                step1 = true;
+                step2 = false;
+                step3 = false;
+              }
+            "
+            :class="step1 ? 'active' : ''"
+          >
+            <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
           </div>
-          <div class="w-full">
-            <!-- <b-form @submit="onSubmit"> -->
-            <form-step-1
-              v-if="step1"
-              :application="applicationStatus"
-              @goStep="changeStep($event)"
-            />
-            <form-step-2
-              v-if="step2"
-              :application="applicationStatus"
-              @goStep="changeStep($event)"
-            />
-            <form-step-3 v-if="step3" :application="applicationStatus" />
-            <!-- </b-form> -->
+          <div
+            class="step"
+            @click="
+              () => {
+                step2 = true;
+                step1 = false;
+                step3 = false;
+              }
+            "
+            :class="step2 ? 'active' : ''"
+          >
+            <font-awesome-icon :icon="['fas', 'camera']"></font-awesome-icon>
+          </div>
+          <div
+            class="step"
+            @click="
+              () => {
+                step3 = true;
+                step2 = false;
+                step1 = false;
+              }
+            "
+            :class="step3 ? 'active' : ''"
+          >
+            <font-awesome-icon :icon="['fas', 'file-pdf']"></font-awesome-icon>
           </div>
         </div>
-      </base-card>
+        <div class="w-full">
+          <!-- <b-form @submit="onSubmit"> -->
+          <form-step-1
+            v-if="step1"
+            :ApplicantId="$route.params.id"
+            @goStep="changeStep($event)"
+          />
+          <form-step-2
+            v-if="step2"
+            :id="$route.params.id"
+            @goStep="changeStep($event)"
+          />
+          <form-step-3 v-if="step3" :id="$route.params.id" />
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-// import { BRow, BCol, BFormGroup, BFormInput } from "bootstrap-vue";
-
-// import { FormWizard, TabContent } from "vue-form-wizard";
-// import { BCol, BRow } from "bootstrap-vue";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import FormStep1 from "./FormStep1.vue";
 import FormStep2 from "./FormStep2.vue";
@@ -90,13 +72,13 @@ import Loading from "../components/Loading.vue";
 export default {
   components: { Loading, FormStep1, FormStep2, FormStep3 },
   name: "Profile",
+
   data() {
     return {
       loading: false,
       step1: true,
       step2: false,
       step3: false,
-
       applicationStatus: {
         id: null,
         stage: null,
@@ -106,56 +88,11 @@ export default {
           qualificationConfirmation: "",
         },
       },
-
       file_portrait: null,
     };
   },
-  mounted() {
-    this.fetchProfile();
-    this.fetchPortrait();
-    this.getApplication();
-  },
+  mounted() {},
   methods: {
-    newApplication() {
-      this.axios
-        .get("/users-applications/new-application/athletes-membership")
-        .then((data) => {
-          let request = data.data.request;
-          this.applicationStatus.id = request.id;
-          this.applicationStatus.stage = request.stage;
-          this.applicationStatus.progress.portraitConfirmation =
-            request.progress.ApplicantPortraitConfirmation;
-          this.applicationStatus.progress.profileConfirmation =
-            request.progress.ApplicantProfileConfirmation;
-          this.applicationStatus.progress.qualificationConfirmation =
-            request.progress.ApplicantQualificationRegistration;
-        });
-    },
-    getApplication() {
-      this.axios.get("/users-applications/").then((data) => {
-        let requests = data.data.requests;
-
-        let resault = requests.filter((el) => {
-          return el.purpose == "New Athletes Memberships";
-        });
-        if (resault.length) {
-          for (let i = 0; i < requests.length; i += 1) {
-            if (requests[i].purpose === "New Athletes Memberships") {
-              this.applicationStatus.id = requests[i].id;
-              this.applicationStatus.stage = requests[i].stage;
-              this.applicationStatus.progress.portraitConfirmation =
-                requests[i].progress.ApplicantPortraitConfirmation;
-              this.applicationStatus.progress.profileConfirmation =
-                requests[i].progress.ApplicantProfileConfirmation;
-              this.applicationStatus.progress.qualificationConfirmation =
-                requests[i].progress.ApplicantQualificationRegistration;
-            }
-          }
-        } else {
-          this.newApplication();
-        }
-      });
-    },
     fetchProfile() {
       this.loading = true;
 
@@ -184,6 +121,11 @@ export default {
         // console.log(data);
       });
     },
+    fetchQulif() {
+      this.axios.post(`users-applications/submit-request/3`).then((data) => {
+        console.log(data);
+      });
+    },
     changeStep(e) {
       if (e == 1) {
         this.step1 = false;
@@ -201,9 +143,6 @@ export default {
         this.preview = URL.createObjectURL(this.file_portrait);
       }
       console.log(this.preview);
-    },
-    message() {
-      console.log("true");
     },
   },
 };
