@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import MainHeader from "./components/MainHeader.vue";
-import MainFooter from "./components/MainFooter.vue";
-import NavBar from "./components/NavBar.vue";
+import MainHeader from './components/MainHeader.vue'
+import MainFooter from './components/MainFooter.vue'
+import NavBar from './components/NavBar.vue'
 // import MainFooter from "@/components/MainFooter";
 // import debounce from "lodash/debounce";
 
@@ -44,11 +44,11 @@ export default {
       newPage: false,
       open: false,
       navigation: false,
-    };
+    }
   },
   watch: {
     $route() {
-      this.checkRoute();
+      this.checkRoute()
     },
   },
   // mounted() {
@@ -56,22 +56,22 @@ export default {
   // },
 
   created() {
-    this.checkRoute();
+    this.checkRoute()
   },
   methods: {
     checkRoute() {
       if (
-        this.$route.name === "Login" ||
-        this.$route.name === "Register" ||
-        this.$route.name === "ForgotPassword"
+        this.$route.name === 'Login' ||
+        this.$route.name === 'Register' ||
+        this.$route.name === 'ForgotPassword'
       ) {
-        this.navigation = true;
-        return;
+        this.navigation = true
+        return
       }
-      this.navigation = false;
+      this.navigation = false
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -96,7 +96,10 @@ div.title {
     color: #fff;
   }
 }
-
+input[type='file'] {
+  opacity: 1 !important;
+  position: relative !important;
+}
 h3.title {
   font-size: 18px;
   font-weight: bold;

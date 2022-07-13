@@ -10,7 +10,7 @@
         class="card-img-top"
         v-if="article.src"
         src="../assets/card1.png"
-        alt=""
+        alt="الاتحاد السعودي للملاحة الشراعية"
       />
       <div class="card-body bg-white p-2 relative">
         <h3 class="card-title text-lg text-secondary font-bold">
@@ -27,25 +27,25 @@
 
 <script>
 export default {
-  props: ["articles"],
+  props: ['articles'],
   data() {
     return {
       scrollArticles: false,
-    };
+    }
   },
   created() {
-    window.addEventListener("scroll", this.checkScroll);
+    window.addEventListener('scroll', this.checkScroll)
   },
   methods: {
     checkScroll() {
-      let articles = document.querySelector(".articles.cards");
+      let articles = document.querySelector('.articles.cards')
       if (window.scrollY >= articles.offsetTop - 600) {
-        return (this.scrollArticles = true);
+        return (this.scrollArticles = true)
       }
-      return (this.scrollArticles = false);
+      return (this.scrollArticles = false)
     },
   },
-};
+}
 </script>
 <style lang="scss">
 .articles {

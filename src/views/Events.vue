@@ -2,7 +2,10 @@
   <section class="events-container">
     <div class="events" v-if="articles.length">
       <div class="image">
-        <img src="../assets/last-event.png" alt="" />
+        <img
+          src="../assets/last-event.webp"
+          alt="الاتحاد السعودي للملاحة الشراعية"
+        />
       </div>
       <div class="event-info">
         <div class="title">
@@ -16,7 +19,7 @@
       </div>
     </div>
     <div class="all-event pb-11">
-      <img src="../assets/bgnews2.png" alt="events" />
+      <img src="../assets/bgnews2.png" alt="الاتحاد السعودي للملاحة الشراعية" />
       <h3 class="text-center text-primary text-2xl font-bold pb-10">
         All events
       </h3>
@@ -45,141 +48,141 @@ export default {
     return {
       articles: [
         {
-          id: "1",
-          src: "images/card1.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '1',
+          src: 'images/card1.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "2",
-          src: "images/card2.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '2',
+          src: 'images/card2.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "3",
-          src: "images/card3.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '3',
+          src: 'images/card3.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "4",
-          src: "images/card4.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '4',
+          src: 'images/card4.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "5",
-          src: "images/card1.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '5',
+          src: 'images/card1.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "6",
-          src: "images/card2.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '6',
+          src: 'images/card2.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "7",
-          src: "images/card3.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '7',
+          src: 'images/card3.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "8",
-          src: "images/card4.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '8',
+          src: 'images/card4.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "9",
-          src: "images/card1.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '9',
+          src: 'images/card1.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "10",
-          src: "images/card2.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '10',
+          src: 'images/card2.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "11",
-          src: "images/card3.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '11',
+          src: 'images/card3.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "12",
-          src: "images/card4.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '12',
+          src: 'images/card4.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "13",
-          src: "images/card1.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '13',
+          src: 'images/card1.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "14",
-          src: "images/card2.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '14',
+          src: 'images/card2.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "15",
-          src: "images/card3.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '15',
+          src: 'images/card3.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
         {
-          id: "16",
-          src: "images/card4.png",
-          alt: "Card image cap",
-          title: "Article Full Title",
+          id: '16',
+          src: 'images/card4.png',
+          alt: 'Card image cap',
+          title: 'Article Full Title',
           description:
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+            'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
         },
       ],
-    };
+    }
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .all-event {
-  background-image: url("../assets/bgnews1.png");
+  background-image: url('../assets/bgnews1.png');
   background-size: cover;
   position: relative;
   background-position: top center;

@@ -212,7 +212,11 @@
                   v-slot="v"
                 >
                   <div class="image-holder mx-auto mb-4" v-if="file_portrait">
-                    <img class="w-full h-full" :src="preview" alt="image" />
+                    <img
+                      class="w-full h-full"
+                      :src="preview"
+                      alt="الاتحاد السعودي للملاحة الشراعية"
+                    />
                   </div>
                   <b-form-file
                     @change="previewMainMedia($event)"
@@ -223,9 +227,9 @@
                   />
 
                   <b-card-text class="text-sm text-primary my-1">
-                    <strong>{{
-                      file_portrait ? file_portrait.name : ""
-                    }}</strong>
+                    <strong>
+                      {{ file_portrait ? file_portrait.name : '' }}
+                    </strong>
                   </b-card-text>
                   <p class="text-red-500 flex mx-auto">
                     {{ v.errors[0] }}
@@ -298,7 +302,11 @@
                   v-slot="v"
                 >
                   <div class="image-holder mx-auto mb-4">
-                    <img class="w-full h-full" :src="preview" alt="image" />
+                    <img
+                      class="w-full h-full"
+                      :src="preview"
+                      alt="الاتحاد السعودي للملاحة الشراعية"
+                    />
                   </div>
                   <b-form-file
                     @change="previewMainMedia($event)"
@@ -309,9 +317,9 @@
                   />
 
                   <b-card-text class="text-sm text-primary my-1">
-                    <strong>{{
-                      file_portrait ? file_portrait.name : ""
-                    }}</strong>
+                    <strong>
+                      {{ file_portrait ? file_portrait.name : '' }}
+                    </strong>
                   </b-card-text>
                   <p class="text-red-500 flex mx-auto">
                     {{ v.errors[0] }}
@@ -342,13 +350,13 @@
 <script>
 // import { BRow, BCol, BFormGroup, BFormInput } from "bootstrap-vue";
 
-import { FormWizard, TabContent } from "vue-form-wizard";
-import { BFormFile, BCardText } from "bootstrap-vue";
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import Loading from "../components/Loading.vue";
+import { FormWizard, TabContent } from 'vue-form-wizard'
+import { BFormFile, BCardText } from 'bootstrap-vue'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import Loading from '../components/Loading.vue'
 export default {
   components: { FormWizard, TabContent, BFormFile, BCardText, Loading },
-  name: "Profile",
+  name: 'Profile',
   data() {
     return {
       loading: false,
@@ -357,134 +365,134 @@ export default {
         id: null,
         stage: null,
         progress: {
-          portraitConfirmation: "",
-          profileConfirmation: "",
-          qualificationConfirmation: "",
+          portraitConfirmation: '',
+          profileConfirmation: '',
+          qualificationConfirmation: '',
         },
       },
       file_portrait: null,
-      nameAr: "",
-      nameEn: "",
-      birthdate: "",
-      gender: "",
-      nationality: "",
-      identityNumber: "",
-      identityType: "",
-      identityExpiry: "",
+      nameAr: '',
+      nameEn: '',
+      birthdate: '',
+      gender: '',
+      nationality: '',
+      identityNumber: '',
+      identityType: '',
+      identityExpiry: '',
       preview: null,
-      identity_file: "",
-      qualificationTitle: "",
-      qualificationOrg: "",
-      genderList: ["Male", "Female"],
-    };
+      identity_file: '',
+      qualificationTitle: '',
+      qualificationOrg: '',
+      genderList: ['Male', 'Female'],
+    }
   },
   mounted() {
-    this.fetchProfile();
-    this.fetchPortrait();
-    this.getApplicationId();
+    this.fetchProfile()
+    this.fetchPortrait()
+    this.getApplicationId()
   },
   methods: {
     getApplicationId() {
-      this.axios.get("/users-applications/").then((data) => {
-        let requests = data.data.requests;
+      this.axios.get('/users-applications/').then((data) => {
+        let requests = data.data.requests
         for (let i = 0; i < requests.length; i += 1) {
-          if (requests[i].purpose === "New Athletes Memberships") {
-            this.applicationStatus.id = requests[i].id;
-            this.applicationStatus.stage = requests[i].stage;
+          if (requests[i].purpose === 'New Athletes Memberships') {
+            this.applicationStatus.id = requests[i].id
+            this.applicationStatus.stage = requests[i].stage
             this.applicationStatus.progress.portraitConfirmation =
-              requests[i].progress.ApplicantPortraitConfirmation;
+              requests[i].progress.ApplicantPortraitConfirmation
             this.applicationStatus.progress.profileConfirmation =
-              requests[i].progress.ApplicantProfileConfirmation;
+              requests[i].progress.ApplicantProfileConfirmation
             this.applicationStatus.progress.qualificationConfirmation =
-              requests[i].progress.ApplicantQualificationRegistration;
+              requests[i].progress.ApplicantQualificationRegistration
           }
         }
-        console.log(this.applicationStatus);
-      });
+        console.log(this.applicationStatus)
+      })
     },
 
     fetchPro() {
       this.axios
         .get(`users-applications/new-application/athletes-membership`)
         .then((data) => {
-          console.log(data);
-        });
+          console.log(data)
+        })
     },
 
     fetchPortrait() {
       this.axios.get(`users/get-portrait`).then(() => {
         // console.log(data);
-      });
+      })
     },
     uploadPortrait() {
-      this.loading = true;
-      let requestFormData = new FormData();
+      this.loading = true
+      let requestFormData = new FormData()
 
-      requestFormData.append("portrait_file", this.file_portrait);
+      requestFormData.append('portrait_file', this.file_portrait)
       this.axios
         .post(
           `users-applications/confirm-applicant-portrait/${this.applicationStatus.id}`,
-          requestFormData
+          requestFormData,
         )
         .then(() => {
-          this.loading = false;
-          this.$refs.profileUpdate.reset();
+          this.loading = false
+          this.$refs.profileUpdate.reset()
         })
         .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
-      return true;
+          console.log(err)
+          this.loading = false
+        })
+      return true
     },
 
     updateProfile() {
-      this.loading = true;
+      this.loading = true
       this.$refs.profileUpdate.validate().then((success) => {
         if (!success) {
-          this.loading = false;
-          return false;
+          this.loading = false
+          return false
         } else {
-          let requestFormData = new FormData();
+          let requestFormData = new FormData()
 
-          requestFormData.append("name_ar", this.nameAr);
-          requestFormData.append("name_en", this.nameEn);
-          requestFormData.append("birthdate", this.birthdate);
-          requestFormData.append("gender", this.gender);
-          requestFormData.append("nationality", this.nationality);
+          requestFormData.append('name_ar', this.nameAr)
+          requestFormData.append('name_en', this.nameEn)
+          requestFormData.append('birthdate', this.birthdate)
+          requestFormData.append('gender', this.gender)
+          requestFormData.append('nationality', this.nationality)
 
-          requestFormData.append("identity_number", this.identityNumber);
-          requestFormData.append("identity_type", this.identityType);
-          requestFormData.append("identity_expiry", this.identityExpiry);
+          requestFormData.append('identity_number', this.identityNumber)
+          requestFormData.append('identity_type', this.identityType)
+          requestFormData.append('identity_expiry', this.identityExpiry)
 
           this.axios
             .post(
               `users-applications/confirm-applicant-profile/${this.applicationStatus.id}`,
-              requestFormData
+              requestFormData,
             )
             .then(() => {
-              this.loading = false;
-              this.$refs.profileUpdate.reset();
+              this.loading = false
+              this.$refs.profileUpdate.reset()
             })
             .catch((err) => {
-              console.log(err);
-              this.loading = false;
-            });
+              console.log(err)
+              this.loading = false
+            })
         }
-      });
-      return true;
+      })
+      return true
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
-        this.file_portrait = event.target.files[0];
-        this.preview = URL.createObjectURL(this.file_portrait);
+        this.file_portrait = event.target.files[0]
+        this.preview = URL.createObjectURL(this.file_portrait)
       }
-      console.log(this.preview);
+      console.log(this.preview)
     },
     message() {
-      console.log("true");
+      console.log('true')
     },
   },
-};
+}
 </script>
 <style lang="scss">
 .image-holder {

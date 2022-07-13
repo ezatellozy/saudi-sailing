@@ -1,488 +1,143 @@
 <template>
   <section>
     <div class="relative container mx-auto">
-      <base-card>
-        <loading v-if="loading" />
-        <form-wizard
-          v-if="items"
-          color="#FFA408"
-          :title="null"
-          :subtitle="null"
-          layout="vertical"
-          finish-button-text="Submit"
-          :next-button-text="$t('buttons.next')"
-          :back-button-text="$t('buttons.previous')"
-          class="wizard-vertical mb-3"
-          @on-complete="updateProfile"
-        >
-          <tab-content
-            :title="$t('misc.personal_informartion')"
-            icon="feather icon-info"
-            @beforeChange="updateProfile"
+      <loading v-if="loading" />
+      <order-summary
+        v-if="summary"
+        :id="this.$route.params.id"
+        :rout="`/settings/instructor-license/${this.$route.params.id}`"
+      />
+      <div
+        class="mt-5 register mx-auto d-flex justify-content-center"
+        v-if="orderNew"
+      >
+        <div class="flex w-full steps justify-between">
+          <div
+            class="step"
+            @click="change('step1')"
+            :class="step1 ? 'active' : ''"
           >
-            <validation-observer v-slot="{}" ref="profileUpdate">
-              <div class="form-input">
-                <validation-provider
-                  name="English name"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="text"
-                      name="English name"
-                      v-model="nameEn"
-                      :placeholder="$t('inputs.english_name')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="Arabic name"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="text"
-                      name="Arabic name"
-                      v-model="nameAr"
-                      :placeholder="$t('inputs.arabic_name')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="birthdate"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-
-                    <input
-                      type="text"
-                      name="birthdate"
-                      v-model="birthdate"
-                      :placeholder="$t('inputs.birthdate')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="gender"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <v-select
-                      name="gender"
-                      :placeholder="$t('inputs.gender')"
-                      :options="genderList"
-                      v-model="gender"
-                    ></v-select>
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="nationality"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="text"
-                      name="nationality"
-                      v-model="nationality"
-                      :placeholder="$t('inputs.nationality')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="identity number"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="number"
-                      name="identity number"
-                      v-model="identityNumber"
-                      :placeholder="$t('inputs.identity_number')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="identity_type"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="text"
-                      name="identity type"
-                      v-model="identityType"
-                      :placeholder="$t('inputs.identity_type')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="identity_expiry"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <font-awesome-icon class="icon" :icon="['fas', 'user']" />
-                    <input
-                      type="text"
-                      name="identity expiry"
-                      v-model="identityExpiry"
-                      :placeholder="$t('inputs.identity_expiry')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-
-              <!-- <div class="flex justify-center">
-                <button
-                  class="border rounded-xl px-4 py-2 font-bold text-lg bg-secondary text-white border-secondary"
-                  :class="{
-                    'cursor-default': invalid,
-                  }"
-                  :disabled="invalid"
-                  @click="updateProfile"
-                >
-                  {{ $t("buttons.update_profile") }}
-                </button>
-              </div> -->
-            </validation-observer>
-          </tab-content>
-
-          <tab-content
-            :title="$t('misc.personal_picture')"
-            icon="feather icon-image"
-            @beforeChange="uploadPortrait"
+            <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
+          </div>
+          <div
+            class="step"
+            @click="change('step2')"
+            :class="step2 ? 'active' : ''"
           >
-            <validation-observer v-slot="{}">
-              <div class="form-input">
-                <validation-provider
-                  name="file_portrait"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="image-holder mx-auto mb-4" v-if="file_portrait">
-                    <img class="w-full h-full" :src="preview" alt="image" />
-                  </div>
-                  <b-form-file
-                    @change="previewMainMedia($event)"
-                    name="file_portrait"
-                    v-model="file_portrait"
-                    :placeholder="'inputs.chooseafileordropithere'"
-                    drop-placeholder="Drop file here..."
-                  />
-
-                  <b-card-text class="text-sm text-primary my-1">
-                    <strong>{{
-                      file_portrait ? file_portrait.name : ""
-                    }}</strong>
-                  </b-card-text>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-
-              <!-- <div class="flex justify-center">
-                <button
-                  class="border rounded-xl px-4 py-2 font-bold text-lg bg-secondary text-white border-secondary"
-                  :class="{
-                    'cursor-default': invalid,
-                  }"
-                  @click="uploadPortrait"
-                  :disabled="invalid"
-                >
-                  {{ $t("buttons.upload") }}
-                </button>
-              </div> -->
-            </validation-observer>
-          </tab-content>
-          <tab-content
-            :title="$t('misc.qualifications')"
-            icon="feather icon-file-text"
+            <font-awesome-icon :icon="['fas', 'camera']"></font-awesome-icon>
+          </div>
+          <div
+            class="step"
+            @click="change('step3')"
+            :class="step3 ? 'active' : ''"
           >
-            <validation-observer v-slot="{}">
-              <div class="form-input">
-                <validation-provider
-                  name="qualification"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <!-- <font-awesome-icon class="icon" icon="fa-solid fa-user" /> -->
-                    <input
-                      type="text"
-                      name="qualification"
-                      v-model="qualificationTitle"
-                      :placeholder="$t('inputs.qualification')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="qualification orgnization"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="group">
-                    <input
-                      type="text"
-                      name="qualification orgnization"
-                      v-model="qualificationOrg"
-                      :placeholder="$t('inputs.qualification_orgnization')"
-                    />
-                  </div>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-              <div class="form-input">
-                <validation-provider
-                  name="file_portrait"
-                  rules="required|min:3|max:80"
-                  v-slot="v"
-                >
-                  <div class="image-holder mx-auto mb-4" v-if="file_portrait">
-                    <img class="w-full h-full" :src="preview" alt="image" />
-                  </div>
-                  <b-form-file
-                    @change="previewMainMedia($event)"
-                    name="file_portrait"
-                    v-model="file_portrait"
-                    :placeholder="'inputs.chooseafileordropithere'"
-                    drop-placeholder="Drop file here..."
-                  />
-
-                  <b-card-text class="text-sm text-primary my-1">
-                    <strong>{{
-                      file_portrait ? file_portrait.name : ""
-                    }}</strong>
-                  </b-card-text>
-                  <p class="text-red-500 flex mx-auto">
-                    {{ v.errors[0] }}
-                  </p>
-                </validation-provider>
-              </div>
-
-              <!-- <div class="flex justify-center">
-                <button
-                  class="border rounded-xl px-4 py-2 font-bold text-lg bg-secondary text-white border-secondary"
-                  :class="{
-                    'cursor-default': invalid,
-                  }"
-                  @click="uploadPortrait"
-                  :disabled="invalid"
-                >
-                  {{ $t("buttons.upload") }}
-                </button>
-              </div> -->
-            </validation-observer>
-          </tab-content>
-        </form-wizard>
-      </base-card>
+            <font-awesome-icon :icon="['fas', 'file-pdf']"></font-awesome-icon>
+          </div>
+        </div>
+        <div class="w-full">
+          <!-- <b-form @submit="onSubmit"> -->
+          <transition name="fade-in">
+            <form-step-1
+              v-if="step1"
+              :id="$route.params.id"
+              @goStep="changeStep($event)"
+            />
+          </transition>
+          <transition name="fade-in">
+            <form-step-2
+              v-if="step2"
+              :id="$route.params.id"
+              @goStep="changeStep($event)"
+            />
+          </transition>
+          <transition name="fade-in">
+            <form-step-3 v-if="step3" :id="$route.params.id" />
+          </transition>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-// import { BRow, BCol, BFormGroup, BFormInput } from "bootstrap-vue";
-
-import { FormWizard, TabContent } from "vue-form-wizard";
-import { BFormFile, BCardText } from "bootstrap-vue";
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import Loading from "../components/Loading.vue";
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import FormStep1 from './FormStep1.vue'
+import FormStep2 from './FormStep2.vue'
+import FormStep3 from './FormStep3.vue'
+import Loading from '../components/Loading.vue'
+import OrderSummary from '../components/OrderSummary.vue'
 export default {
-  components: { FormWizard, TabContent, BFormFile, BCardText, Loading },
-  name: "InstructorLicense",
+  components: { Loading, FormStep1, FormStep2, FormStep3, OrderSummary },
+  name: 'Profile',
+
   data() {
     return {
       loading: false,
-      items: null,
+      summary: false,
+      orderNew: false,
+      step1: true,
+      step2: false,
+      step3: false,
       applicationStatus: {
         id: null,
         stage: null,
         progress: {
-          portraitConfirmation: "",
-          profileConfirmation: "",
-          qualificationConfirmation: "",
+          portraitConfirmation: '',
+          profileConfirmation: '',
+          qualificationConfirmation: '',
         },
       },
       file_portrait: null,
-      nameAr: "",
-      nameEn: "",
-      birthdate: "",
-      gender: "",
-      nationality: "",
-      identityNumber: "",
-      identityType: "",
-      identityExpiry: "",
-      preview: null,
-      identity_file: "",
-      qualificationTitle: "",
-      qualificationOrg: "",
-      genderList: ["Male", "Female"],
-    };
+    }
   },
   mounted() {
-    this.fetchProfile();
-    this.fetchPortrait();
-    this.getApplicationId();
-    this.fetchPro();
+    this.changeStep(this.$route.params.step)
+    this.checkStatus()
   },
   methods: {
-    getApplicationId() {
-      this.axios.get("/users-applications/").then((data) => {
-        let requests = data.data.requests;
-        for (let i = 0; i < requests.length; i += 1) {
-          if (requests[i].purpose === "New Athletes Memberships") {
-            console.log("New Athletes Memberships :", requests[i].id);
-          } else if (requests[i].purpose === "New Instructor License") {
-            console.log("New Instructor License :", requests[i].id);
-          }
-        }
-        // console.log(data);
-        this.applicationStatus.id = data.requests.id;
-      });
+    change(step) {
+      this.$router.push(
+        `/settings/instructor-license/${this.$route.params.id}/new/${step}`,
+      )
     },
-
-    fetchPro() {
-      this.axios
-        .get(`users-applications/new-application/instructor-license`)
-        .then((data) => {
-          console.log(data);
-        });
+    changeStep(e) {
+      if (e == 'step1') {
+        this.step1 = true
+        this.step2 = false
+        this.step3 = false
+      } else if (e == 'step2') {
+        this.step1 = false
+        this.step2 = true
+        this.step3 = false
+      } else if (e == 'step3') {
+        this.step1 = false
+        this.step2 = false
+        this.step3 = true
+      }
     },
-    fetchProfile() {
-      this.loading = true;
-      this.items = false;
-      this.axios
-        .get(`users/get-profile`)
-        .then((data) => {
-          let dataProfile = data.data.profile;
-          if (dataProfile.length != 0) {
-            this.nameAr = dataProfile.name_ar;
-            this.nameEn = dataProfile.name_en;
-            this.birthdate = dataProfile.birthdate;
-            this.gender = dataProfile.gender;
-            this.nationality = dataProfile.nationality;
-            this.identityNumber = dataProfile.identity_number;
-            this.identityType = dataProfile.identity_type;
-            this.identityExpiry = dataProfile.identity_expiry;
-          }
-        })
-        .finally(() => {
-          this.items = true;
-          this.loading = false;
-        });
-    },
-    fetchPortrait() {
-      this.axios.get(`users/get-portrait`).then(() => {
-        // console.log(data);
-      });
-    },
-    uploadPortrait() {
-      this.loading = true;
-      let requestFormData = new FormData();
-
-      requestFormData.append("portrait_file", this.file_portrait);
-      this.axios
-        .post(`users/update-portrait`, requestFormData)
-        .then(() => {
-          this.loading = false;
-          this.$refs.profileUpdate.reset();
-        })
-        .catch(() => {
-          // console.log(err);
-          this.loading = false;
-        });
-    },
-    updateProfile() {
-      this.loading = true;
-      let requestFormData = new FormData();
-
-      requestFormData.append("name_ar", this.nameAr);
-      requestFormData.append("name_en", this.nameEn);
-      requestFormData.append("birthdate", this.birthdate);
-      requestFormData.append("gender", this.gender);
-      requestFormData.append("nationality", this.nationality);
-
-      requestFormData.append("identity_number", this.identityNumber);
-      requestFormData.append("identity_type", this.identityType);
-      requestFormData.append("identity_expiry", this.identityExpiry);
-
-      this.axios
-        .post(`users/update-profile`, requestFormData)
-        .then(() => {
-          this.loading = false;
-          this.$refs.profileUpdate.reset();
-        })
-        .catch(() => {
-          // console.log(err);
-          this.loading = false;
-        });
+    checkStatus() {
+      if (this.$route.params.status == 'new') {
+        this.orderNew = true
+        this.summary = false
+      } else if (this.$route.params.status == 'summary') {
+        this.summary = true
+        this.orderNew = false
+      }
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
-        this.file_portrait = event.target.files[0];
-        this.preview = URL.createObjectURL(this.file_portrait);
+        this.file_portrait = event.target.files[0]
+        this.preview = URL.createObjectURL(this.file_portrait)
       }
     },
   },
-};
+  watch: {
+    $route() {
+      this.changeStep(this.$route.params.step)
+      this.checkStatus()
+    },
+  },
+}
 </script>
 <style lang="scss">
 .image-holder {
@@ -548,5 +203,110 @@ export default {
       right: 10px;
     }
   }
+}
+.steps-form .steps-row .first .btn-circle:hover,
+.steps-form .steps-row .third .btn-circle:hover {
+  background-color: white !important;
+  color: #303f9f !important;
+}
+.register-third .second a,
+.register-third .third a {
+  cursor: not-allowed;
+}
+.register-third .steps-form .steps-row .third .btn-circle {
+  background-color: #303f9f !important;
+  color: white !important;
+}
+.steps-form .steps-row .second .btn-circle:hover,
+.steps-form .steps-row .first .btn-circle:hover {
+  background-color: white !important;
+  color: #303f9f !important;
+}
+.register {
+  max-width: 800px;
+}
+.steps {
+  position: relative;
+  margin-bottom: 30px;
+  &::before {
+    content: '';
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: 0;
+    position: absolute;
+    width: calc(100% - 24px);
+    height: 2px;
+    background-color: #7283a7;
+  }
+  .step {
+    height: 218px;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border: 1px solid #59698d;
+    svg {
+      font-size: 35px;
+      transition: all 0s ease-in-out;
+      color: #7283a7;
+    }
+    &.active {
+      background-color: #303f9f !important;
+      svg {
+        color: #fff !important;
+      }
+    }
+    .no-height {
+      height: 50px;
+    }
+    p {
+      margin-top: 0.5rem;
+    }
+  }
+}
+.register .success .icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 40px auto;
+  background-color: #303f9f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register .success .icon svg {
+  font-size: 30px;
+  color: white;
+}
+[type='file'] {
+  filter: alpha(opacity=0);
+  opacity: 0;
+  position: absolute;
+}
+[type='file'] + label {
+  left: 0;
+  top: 0.5em;
+  color: #303f9f;
+  cursor: pointer;
+  position: relative;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  transition: all 0.4s ease-in-out;
+}
+[type='file'] + label:before {
+  content: '\f093';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #303f9f;
+  margin-left: 5px;
+  margin-right: 5px;
+  transition: all 0.4s ease-in-out;
 }
 </style>

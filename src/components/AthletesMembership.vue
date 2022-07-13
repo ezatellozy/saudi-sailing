@@ -2,43 +2,33 @@
   <section>
     <div class="relative container mx-auto">
       <loading v-if="loading" />
-      <div class="mt-5 register mx-auto d-flex justify-content-center">
+      <order-summary
+        v-if="summary"
+        :id="this.$route.params.id"
+        :rout="`/settings/athletes-membership/${this.$route.params.id}`"
+      />
+      <div
+        class="mt-5 register mx-auto d-flex justify-content-center"
+        v-if="orderNew"
+      >
         <div class="flex w-full steps justify-between">
           <div
             class="step"
-            @click="
-              () => {
-                step1 = true;
-                step2 = false;
-                step3 = false;
-              }
-            "
+            @click="change('step1')"
             :class="step1 ? 'active' : ''"
           >
             <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
           </div>
           <div
             class="step"
-            @click="
-              () => {
-                step2 = true;
-                step1 = false;
-                step3 = false;
-              }
-            "
+            @click="change('step2')"
             :class="step2 ? 'active' : ''"
           >
             <font-awesome-icon :icon="['fas', 'camera']"></font-awesome-icon>
           </div>
           <div
             class="step"
-            @click="
-              () => {
-                step3 = true;
-                step2 = false;
-                step1 = false;
-              }
-            "
+            @click="change('step3')"
             :class="step3 ? 'active' : ''"
           >
             <font-awesome-icon :icon="['fas', 'file-pdf']"></font-awesome-icon>
@@ -46,17 +36,24 @@
         </div>
         <div class="w-full">
           <!-- <b-form @submit="onSubmit"> -->
-          <form-step-1
-            v-if="step1"
-            :ApplicantId="$route.params.id"
-            @goStep="changeStep($event)"
-          />
-          <form-step-2
-            v-if="step2"
-            :id="$route.params.id"
-            @goStep="changeStep($event)"
-          />
-          <form-step-3 v-if="step3" :id="$route.params.id" />
+          <transition name="fade-in">
+            <form-step-1
+              v-if="step1"
+              :id="$route.params.id"
+              @goStep="changeStep($event)"
+            />
+          </transition>
+          <transition name="fade-in">
+            <form-step-2
+              v-if="step2"
+              :id="$route.params.id"
+              @goStep="changeStep($event)"
+            />
+          </transition>
+
+          <transition name="fade-in">
+            <form-step-3 v-if="step3" :id="$route.params.id" />
+          </transition>
         </div>
       </div>
     </div>
@@ -64,18 +61,21 @@
 </template>
 
 <script>
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import FormStep1 from "./FormStep1.vue";
-import FormStep2 from "./FormStep2.vue";
-import FormStep3 from "./FormStep3.vue";
-import Loading from "../components/Loading.vue";
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import FormStep1 from './FormStep1.vue'
+import FormStep2 from './FormStep2.vue'
+import FormStep3 from './FormStep3.vue'
+import Loading from '../components/Loading.vue'
+import OrderSummary from '../components/OrderSummary.vue'
 export default {
-  components: { Loading, FormStep1, FormStep2, FormStep3 },
-  name: "Profile",
+  components: { Loading, FormStep1, FormStep2, FormStep3, OrderSummary },
+  name: 'Profile',
 
   data() {
     return {
       loading: false,
+      summary: false,
+      orderNew: false,
       step1: true,
       step2: false,
       step3: false,
@@ -83,69 +83,63 @@ export default {
         id: null,
         stage: null,
         progress: {
-          portraitConfirmation: "",
-          profileConfirmation: "",
-          qualificationConfirmation: "",
+          portraitConfirmation: '',
+          profileConfirmation: '',
+          qualificationConfirmation: '',
         },
       },
       file_portrait: null,
-    };
+    }
   },
-  mounted() {},
+  mounted() {
+    this.changeStep(this.$route.params.step)
+    this.checkStatus()
+  },
   methods: {
-    fetchProfile() {
-      this.loading = true;
-
-      this.axios
-        .get(`users/get-profile`)
-        .then((data) => {
-          let dataProfile = data.data.profile;
-          if (dataProfile.length != 0) {
-            this.nameAr = dataProfile.name_ar;
-            this.nameEn = dataProfile.name_en;
-            this.birthdate = dataProfile.birthdate;
-            this.gender = dataProfile.gender;
-            this.nationality = dataProfile.nationality;
-            this.identityNumber = dataProfile.identity_number;
-            this.identityType = dataProfile.identity_type;
-            this.identityExpiry = dataProfile.identity_expiry;
-          }
-        })
-        .finally(() => {
-          this.items = true;
-          this.loading = false;
-        });
-    },
-    fetchPortrait() {
-      this.axios.get(`users/get-portrait`).then(() => {
-        // console.log(data);
-      });
-    },
-    fetchQulif() {
-      this.axios.post(`users-applications/submit-request/3`).then((data) => {
-        console.log(data);
-      });
+    change(step) {
+      this.$router.push(
+        `/settings/athletes-membership/${this.$route.params.id}/new/${step}`,
+      )
     },
     changeStep(e) {
-      if (e == 1) {
-        this.step1 = false;
-        this.step2 = true;
-        this.step3 = false;
-      } else if (e == 2) {
-        this.step1 = false;
-        this.step2 = false;
-        this.step3 = true;
+      if (e == 'step1') {
+        this.step1 = true
+        this.step2 = false
+        this.step3 = false
+      } else if (e == 'step2') {
+        this.step1 = false
+        this.step2 = true
+        this.step3 = false
+      } else if (e == 'step3') {
+        this.step1 = false
+        this.step2 = false
+        this.step3 = true
+      }
+    },
+    checkStatus() {
+      if (this.$route.params.status == 'new') {
+        this.orderNew = true
+        this.summary = false
+      } else if (this.$route.params.status == 'summary') {
+        this.summary = true
+        this.orderNew = false
       }
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
-        this.file_portrait = event.target.files[0];
-        this.preview = URL.createObjectURL(this.file_portrait);
+        this.file_portrait = event.target.files[0]
+        this.preview = URL.createObjectURL(this.file_portrait)
       }
-      console.log(this.preview);
+      console.log(this.preview)
     },
   },
-};
+  watch: {
+    $route() {
+      this.changeStep(this.$route.params.step)
+      this.checkStatus()
+    },
+  },
+}
 </script>
 <style lang="scss">
 .image-holder {
@@ -237,7 +231,7 @@ export default {
   position: relative;
   margin-bottom: 30px;
   &::before {
-    content: "";
+    content: '';
     top: 50%;
     transform: translateY(-50%);
     bottom: 0;
@@ -291,12 +285,12 @@ export default {
   font-size: 30px;
   color: white;
 }
-[type="file"] {
+[type='file'] {
   filter: alpha(opacity=0);
   opacity: 0;
   position: absolute;
 }
-[type="file"] + label {
+[type='file'] + label {
   left: 0;
   top: 0.5em;
   color: #303f9f;
@@ -308,9 +302,9 @@ export default {
   font-size: 17px;
   transition: all 0.4s ease-in-out;
 }
-[type="file"] + label:before {
-  content: "\f093";
-  font-family: "Font Awesome 6 Free";
+[type='file'] + label:before {
+  content: '\f093';
+  font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   color: #303f9f;
   margin-left: 5px;

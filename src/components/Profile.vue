@@ -1,8 +1,13 @@
 <template>
   <div class="relative">
-    <div class="avatar" @click="profileMenu = !profileMenu">
-      <img v-if="avatar" class="w-full" src="@/assets/member.png" alt="" />
-      <span class="font-bold" v-else>{{ initialName }}</span>
+    <div class="avatar overflow-hidden" @click="profileMenu = !profileMenu">
+      <img
+        v-if="avatar"
+        class="w-full"
+        :src="`/${avatar}`"
+        alt="الاتحاد السعودي للملاحة الشراعية"
+      />
+      <span class="font-bold overflow-hidden" v-else>{{ initialName }}</span>
     </div>
     <div
       @click="profileMenu = !profileMenu"
@@ -11,7 +16,14 @@
       :class="$i18n.locale == 'en' ? 'left-0' : 'right-0'"
     >
       <div class="info">
-        <p class="initials">{{ initialName }}</p>
+        <p class="initials overflow-hidden" v-if="avatar">
+          <img
+            class="w-full"
+            :src="`/${avatar}`"
+            alt="الاتحاد السعودي للملاحة الشراعية"
+          />
+        </p>
+        <p class="initials overflow-hidden" v-else>{{ initialName }}</p>
         <div class="right text-left">
           <p>{{ name }}</p>
           <p>{{ email }}</p>
@@ -19,14 +31,14 @@
       </div>
       <div class="options">
         <div class="option">
-          <router-link class="option" :to="{ name: 'Profile' }">
+          <router-link class="option" :to="{ name: 'profile' }">
             <font-awesome-icon :icon="['fas', 'user']" />
-            <p>Profile</p>
+            <p>{{ $t('misc.Profile') }}</p>
           </router-link>
         </div>
-        <div @click="signOut" class="option">
+        <div @click="signOut" class="option cursor-pointer">
           <font-awesome-icon :icon="['fas', 'door-open']" />
-          <p>Logout</p>
+          <p>{{ $t('misc.Logout') }}</p>
         </div>
       </div>
     </div>
@@ -37,35 +49,42 @@
 export default {
   data() {
     return {
-      avatar: false,
+      avatar: null,
       profileMenu: null,
-    };
+    }
   },
   methods: {
     signOut() {
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("user");
-      window.location.reload();
+      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('user')
+      window.location.reload()
+    },
+    fetchPortrait() {
+      this.axios.get(`users/get-portrait`).then((data) => {
+        this.avatar = data.data.portrait.link
+      })
     },
   },
-
+  mounted() {
+    this.fetchPortrait()
+  },
   computed: {
     initialName() {
       return (
-        JSON.parse(sessionStorage.getItem("user"))
+        JSON.parse(sessionStorage.getItem('user'))
           .name.match(/(\b\S)?/g)
-          .join("")
-          .toUpperCase() || ""
-      );
+          .join('')
+          .toUpperCase() || ''
+      )
     },
     email() {
-      return JSON.parse(sessionStorage.getItem("user")).email;
+      return JSON.parse(sessionStorage.getItem('user')).email
     },
     name() {
-      return JSON.parse(sessionStorage.getItem("user")).name;
+      return JSON.parse(sessionStorage.getItem('user')).name
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

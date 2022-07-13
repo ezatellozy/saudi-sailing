@@ -5,7 +5,7 @@
         v-if="member.src"
         src="../assets/member.png"
         class="card-img"
-        alt="Member"
+        alt="الاتحاد السعودي للملاحة الشراعية"
       />
       <div class="card-body p-5">
         <h4
@@ -23,8 +23,8 @@
 
 <script>
 export default {
-  props: ["member"],
-};
+  props: ['member'],
+}
 </script>
 
 <style lang="scss" scoped>

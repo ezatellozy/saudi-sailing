@@ -2,43 +2,44 @@
   <div class="settings">
     <div class="title">
       <img src="../assets/header-bg1.svg" alt="" />
-      <h2 class="">{{ $t("misc.settings") }}</h2>
+      <h2 class="">{{ $t('misc.settings') }}</h2>
     </div>
     <div class="setting border mt-3">
       <div class="container flex justify-between flex-wrap mx-auto">
         <div class="side-menu w-full md:w-1/4 px-2">
           <h3 class="title">
-            {{ $t("misc.myAccount") }}
+            {{ $t('misc.myAccount') }}
           </h3>
           <ul>
             <li>
               <router-link class="link" :to="{ name: 'dashboard' }">
-                {{ $t("misc.dashboard") }}
+                {{ $t('misc.dashboard') }}
               </router-link>
             </li>
             <li>
-              <router-link :to="{ name: 'profile' }" class="link">
-                {{ $t("misc.personal_informartion") }}
+              <router-link to="/settings/profile/all" class="link">
+                {{ $t('misc.personal_informartion') }}
               </router-link>
             </li>
             <li>
               <button class="link" @click="newAthletesMembershipsApplication">
-                {{ $t("misc.athletes_membership") }}
+                {{ $t('misc.athletes_membership') }}
               </button>
             </li>
             <li>
               <button class="link" @click="newInstructorLicenseApplication">
-                {{ $t("misc.instructor_license") }}
+                {{ $t('misc.instructor_license') }}
               </button>
             </li>
           </ul>
         </div>
         <div class="content w-full md:w-3/4 p-3">
-          <router-view />
-
-          <!-- <Profile v-if="profile" />
-          <AthletesMembership :item="athletesMemberships" v-if="athletes" />
-          <InstructorLicense :item="instructorLicense" v-if="instructor" /> -->
+          <transition name="fade-in">
+            <router-view
+              @newAthletes="newAthletesMembershipsApplication"
+              @newInstructor="newInstructorLicenseApplication"
+            />
+          </transition>
         </div>
       </div>
     </div>
@@ -46,12 +47,7 @@
 </template>
 
 <script>
-// import Profile from "./Profile.vue";
-// import AthletesMembership from "@/components/AthletesMembership.vue";
-// import InstructorLicense from "@/components/InstructorLicense.vue";
-// import Dashboard from "../components/Dashboard.vue";
 export default {
-  // components: { Dashboard },
   data() {
     return {
       athletes: false,
@@ -60,82 +56,106 @@ export default {
       dashboard: true,
       athletesMemberships: null,
       instructorLicense: null,
-    };
+    }
   },
   mounted() {
-    this.getApplication();
+    this.getApplication()
   },
   methods: {
     newAthletesMembershipsApplication() {
       if (this.athletesMemberships) {
-        this.$router.push(
-          this.$route.fullPath.replace(
-            `${this.$route.path}`,
-            `/settings/athletes-membership/${this.athletesMemberships.id}`
+        if (
+          this.athletesMemberships.status == 'Modified' ||
+          this.athletesMemberships.status == 'Submitted'
+        ) {
+          this.$router.push(
+            this.$route.fullPath.replace(
+              `${this.$route.path}`,
+              `/settings/athletes-membership/${this.athletesMemberships.id}/summary/summary`,
+            ),
           )
-        );
+        } else {
+          this.$router.push(
+            this.$route.fullPath.replace(
+              `${this.$route.path}`,
+              `/settings/athletes-membership/${this.athletesMemberships.id}/new/step1`,
+            ),
+          )
+        }
       } else {
         this.axios
-          .get("/users-applications/new-application/athletes-membership")
+          .get('/users-applications/new-application/athletes-membership')
           .then((data) => {
-            let request = data.data.request;
-            this.athletesMemberships = request;
+            let request = data.data.request
+            this.athletesMemberships = request
             this.$router.push(
               this.$route.fullPath.replace(
                 `${this.$route.path}`,
-                `/settings/athletes-membership/${this.athletesMemberships.id}`
-              )
-            );
-          });
+                `/settings/athletes-membership/${this.athletesMemberships.id}/new/step1`,
+              ),
+            )
+          })
       }
     },
     newInstructorLicenseApplication() {
       if (this.instructorLicense) {
-        this.$router.push(
-          this.$route.fullPath.replace(
-            `${this.$route.path}`,
-            `/settings/instructor-license/${this.instructorLicense.id}`
+        if (
+          this.instructorLicense.status == 'Modified' ||
+          this.instructorLicense.status == 'Submitted'
+        ) {
+          this.$router.push(
+            this.$route.fullPath.replace(
+              `${this.$route.path}`,
+              `/settings/instructor-license/${this.instructorLicense.id}/summary/summary`,
+            ),
           )
-        );
+        } else {
+          this.$router.push(
+            this.$route.fullPath.replace(
+              `${this.$route.path}`,
+              `/settings/instructor-license/${this.instructorLicense.id}/new/step1`,
+            ),
+          )
+        }
       } else {
         this.axios
-          .get("/users-applications/new-application/athletes-membership")
+          .get('/users-applications/new-application/instructor-license')
           .then((data) => {
-            let request = data.data.request;
-            this.instructorLicense = request;
+            let request = data.data.request
+            this.instructorLicense = request
             this.$router.push(
               this.$route.fullPath.replace(
                 `${this.$route.path}`,
-                `/settings/instructor-license/${this.instructorLicense.id}`
-              )
-            );
-          });
+                `/settings/instructor-license/${this.instructorLicense.id}/new/step1`,
+              ),
+            )
+          })
       }
     },
     getApplication() {
-      this.axios.get("/users-applications/").then((data) => {
-        let requests = data.data.requests;
+      this.axios.get('/users-applications/').then((data) => {
+        let requests = data.data.requests
         if (requests.length) {
           let athletesMemberships = requests.filter((el) => {
-            return el.purpose == "New Athletes Memberships";
-          });
+            return el.purpose == 'New Athletes Memberships'
+          })
           let instructorLicense = requests.filter((el) => {
-            return el.purpose == "New Instructor License";
-          });
-          this.athletesMemberships = athletesMemberships[0];
-          this.instructorLicense = instructorLicense[0];
+            return el.purpose == 'New Instructor License'
+          })
+          this.athletesMemberships = athletesMemberships[0]
+          this.instructorLicense = instructorLicense[0]
         }
-      });
+      })
     },
     openTabs(tab) {
-      this.athletes = false;
-      this.instructor = false;
-      this.profile = false;
-      this.dashboard = false;
-      this[tab] = true;
+      this.athletes = false
+      this.instructor = false
+      this.profile = false
+      this.dashboard = false
+      this[tab] = true
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

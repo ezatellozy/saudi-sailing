@@ -12,27 +12,27 @@
 </template>
 <script>
 export default {
-  props: ["gallary"],
+  props: ['gallary'],
   data() {
     return {
       scrollGallary: false,
-    };
+    }
   },
   created() {
-    window.addEventListener("scroll", this.checkScroll);
+    window.addEventListener('scroll', this.checkScroll)
   },
   methods: {
     checkScroll() {
-      let gallary = document.querySelector(".gallary");
+      let gallary = document.querySelector('.gallary')
       if (window.scrollY >= gallary.offsetTop - 500) {
-        return (this.scrollGallary = true);
+        return (this.scrollGallary = true)
       }
-      return (this.scrollGallary = false);
+      return (this.scrollGallary = false)
     },
   },
-};
+}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .image-holder {
   transform: rotateY(90deg);
   &.reset {

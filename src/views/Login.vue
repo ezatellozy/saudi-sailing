@@ -3,13 +3,13 @@
     <loading v-if="loading" />
     <small-card>
       <h3 class="text-primary font-bold text-center my-5 text-lg md:text-xl">
-        Sign in
+        {{ $t('misc.login') }}
       </h3>
       <div class="p-4">
         <validation-observer v-slot="{ invalid }">
           <div class="form-input">
             <validation-provider
-              name="user_name"
+              name="email"
               rules="required|min:3|max:80"
               v-slot="v"
             >
@@ -17,14 +17,14 @@
                 <font-awesome-icon class="icon" :icon="['fas', 'user']" />
 
                 <input
-                  type="text"
-                  name="user_name"
-                  v-model="userName"
-                  placeholder="User Name"
+                  type="email"
+                  name="email"
+                  v-model="user.userName"
+                  :placeholder="$t('inputs.email')"
                 />
               </div>
-              <p class="text-red-500 flex mx-auto">
-                {{ v.errors[0] }}
+              <p class="text-red-500 flex mx-auto" v-if="v.errors[0]">
+                {{ $t(`misc.${v.errors[0]}`) }}
               </p>
             </validation-provider>
           </div>
@@ -39,16 +39,16 @@
                 <input
                   type="password"
                   name="password"
-                  v-model="password"
-                  placeholder="Password"
+                  v-model="user.password"
+                  :placeholder="$t('misc.password')"
                 />
                 <div class="flex justify-end">
-                  <a href="/forgot-password" class="text-primary"
-                    >Forgot password?</a
-                  >
+                  <a href="/forgot-password" class="text-primary">
+                    {{ $t('misc.forgot_password?') }}
+                  </a>
                 </div>
-                <p class="text-red-500">
-                  {{ v.errors[0] }}
+                <p class="text-red-500" v-if="v.errors[0]">
+                  {{ $t(`misc.${v.errors[0]}`) }}
                 </p>
               </div>
             </validation-provider>
@@ -65,70 +65,86 @@
               @click="login()"
               :disabled="invalid"
             >
-              Login
+              {{ $t('misc.login') }}
             </button>
           </div>
         </validation-observer>
       </div>
       <div class="flex justify-center mt-4 text-center font-bold text-sm">
-        <p class="text-primary mx-2">Don't have an account?</p>
-        <a class="text-secondary" href="/Register">Create an account</a>
+        <p class="text-primary mx-2">{{ $t('misc.Dont have an account?') }}</p>
+        <a class="text-secondary" href="/register">
+          {{ $t('misc.Create an account') }}
+        </a>
       </div>
     </small-card>
   </section>
 </template>
 
 <script>
-import Loading from "../components/Loading.vue";
+import Loading from '../components/Loading.vue'
 export default {
-  name: "Login",
+  name: 'Login',
   components: { Loading },
   data() {
     return {
-      loading: false,
       loggedIn: false,
-
-      userName: "",
-      password: "",
-      err: null,
-    };
+      user: {
+        userName: '',
+        password: '',
+      },
+      // err: null,
+    }
   },
-
-  methods: {
-    login() {
-      if (this.loggedIn) {
-        return;
-      }
-      this.loading = true;
-      const data = new FormData();
-
-      data.append("username", this.userName);
-      data.append("password", this.password);
-
-      this.axios
-        .post("users/login", data)
-        .then((data) => {
-          sessionStorage.setItem("user", JSON.stringify(data.data.user));
-          sessionStorage.setItem("token", data.data.token);
-          this.$store.commit("setUser", data.data.user);
-          this.$store.commit("setToken", data.data.token);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        })
-        .catch((errors) => {
-          if (errors.response.status == 401) {
-            this.err = errors.response.data.message;
-
-            this.$refs.loginForm.setErrors(errors.response.data.message);
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+  computed: {
+    loading() {
+      return this.$store.getters.loading
+    },
+    err() {
+      return this.$store.getters.status
     },
   },
-};
+  watch: {
+    err(val) {
+      if (val) {
+        this.$toasted.show(val)
+      }
+      // console.log(val)
+    },
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('login', this.user)
+
+      // this.loading = true
+      // const data = new FormData()
+
+      // data.append('username', this.userName)
+      // data.append('password', this.password)
+
+      // this.axios
+      //   .post('users/login', data)
+      //   .then((data) => {
+      //     this.$toasted.show(data.data.status)
+      //     sessionStorage.setItem('user', JSON.stringify(data.data.user))
+      //     sessionStorage.setItem('token', data.data.token)
+      //     this.$store.commit('setUser', data.data.user)
+      //     this.$store.commit('setToken', data.data.token)
+      //     setTimeout(() => {
+      //       window.location.reload()
+      //     }, 1000)
+      //   })
+      //   .catch((errors) => {
+      //     if (errors.response.status == 401) {
+      //       this.err = errors.response.data.message
+      //       this.$refs.loginForm.setErrors(errors.response.data.message)
+      //     }
+      //   })
+      //   .finally(() => {
+      //     this.loading = false
+      //   })
+    },
+  },
+}
 </script>
 <style scoped lang="scss">
 .form-input {

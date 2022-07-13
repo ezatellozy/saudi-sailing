@@ -1,9 +1,13 @@
 <template>
   <section>
     <div class="title">
-      <img src="../assets/header-bg1.svg" alt="" />
-      <h2 class="">Contact us</h2>
+      <img
+        src="../assets/header-bg1.svg"
+        alt="الاتحاد السعودي للملاحة الشراعية"
+      />
+      <h2 class="">{{ $t('misc.Contact us') }}</h2>
     </div>
+
     <div class="contact-us relative">
       <small-card>
         <div class="p-4">
@@ -22,10 +26,10 @@
                     v-model="name"
                     placeholder="Your Name"
                   />
+                  <p class="text-red-500 text-sm flex mx-auto">
+                    {{ v.errors[0] }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
@@ -42,10 +46,10 @@
                     v-model="email"
                     placeholder="Email"
                   />
+                  <p class="text-red-500 text-sm flex mx-auto">
+                    {{ v.errors[0] }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
@@ -62,10 +66,10 @@
                     v-model="subject"
                     placeholder="Your subject"
                   />
+                  <p class="text-red-500 text-sm flex mx-auto">
+                    {{ v.errors[0] }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
@@ -82,10 +86,10 @@
                     v-model="message"
                     placeholder="Type Your Message"
                   />
+                  <p class="text-red-500 text-sm flex mx-auto">
+                    {{ v.errors[0] }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
 
@@ -98,7 +102,7 @@
                 @click="register()"
                 :disabled="invalid"
               >
-                {{ $t("buttons.send") }}
+                {{ $t('buttons.send') }}
               </button>
             </div>
           </validation-observer>
@@ -112,22 +116,22 @@
 export default {
   data() {
     return {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    };
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    }
   },
 
   methods: {
     submit() {
-      this.name = "";
-      this.email = "";
-      this.subject = "";
-      this.message = "";
+      this.name = ''
+      this.email = ''
+      this.subject = ''
+      this.message = ''
     },
   },
-};
+}
 </script>
 <style scoped lang="scss">
 .form-input {

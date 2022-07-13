@@ -1,40 +1,43 @@
 <template>
   <div class="footer flex justify-between flex-wrap pt-12">
     <div class="logo pl-4 flex justify-center flex-col">
-      <img src="../assets/footerlogo.png" alt="LOGO" />
+      <img
+        src="../assets/footerlogo.png"
+        alt="الاتحاد السعودي للملاحة الشراعية"
+      />
     </div>
     <div class="text flex-1 md:justify-end">
       <ul class="links md:mb-5 self-end w-full md:w-3/4 flex flex-wrap">
         <div class="w-full flex flex-wrap md:w-2/3">
           <li class="w-1/2">
-            <router-link class="link" to="/">{{
-              $t("buttons.home")
-            }}</router-link>
+            <router-link class="link" to="/">
+              {{ $t('buttons.home') }}
+            </router-link>
           </li>
           <li class="w-1/2">
-            <router-link class="link" to="/about">{{
-              $t("buttons.federation")
-            }}</router-link>
+            <router-link class="link" to="/about">
+              {{ $t('buttons.federation') }}
+            </router-link>
+          </li>
+          <li class="w-1/2" v-if="false">
+            <router-link class="link" to="/events">
+              {{ $t('buttons.events') }}
+            </router-link>
           </li>
           <li class="w-1/2">
-            <router-link class="link" to="/events">{{
-              $t("buttons.events")
-            }}</router-link>
+            <router-link class="link" to="/contact-us">
+              {{ $t('buttons.contact') }}
+            </router-link>
           </li>
           <li class="w-1/2">
-            <router-link class="link" to="/contact-us">{{
-              $t("buttons.contact")
-            }}</router-link>
+            <router-link class="link" to="/license">
+              {{ $t('buttons.license') }}
+            </router-link>
           </li>
           <li class="w-1/2">
-            <router-link class="link" to="/license">{{
-              $t("buttons.license")
-            }}</router-link>
-          </li>
-          <li class="w-1/2">
-            <router-link class="link" to="/settings/profile">{{
-              $t("buttons.membership")
-            }}</router-link>
+            <router-link class="link" to="/settings/profile">
+              {{ $t('buttons.membership') }}
+            </router-link>
           </li>
         </div>
         <div class="w-full flex flex-wrap md:w-1/3">
@@ -98,7 +101,7 @@
   </div>
 </template>
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="scss">
@@ -116,7 +119,7 @@ export default {};
   }
   .text {
     @apply flex flex-1  items-end xl:items-center;
-    background-image: url("../assets/footer.svg");
+    background-image: url('../assets/footer.webp');
     background-size: cover;
     @media (max-width: 768px) {
       background-position: center center;

@@ -1,37 +1,37 @@
 <template>
   <div class="dashboard">
-    <h3 class="title">{{ $t("misc.dashboard") }}</h3>
+    <h3 class="title">{{ $t('misc.dashboard') }}</h3>
     <div class="content flex flex-wrap">
       <div class="w-full border md:w-1/2 lg:w-1/3">
-        <button>
+        <router-link to="/settings/profile/all">
           <span class="icon">
             <font-awesome-icon size="2x" :icon="['fas', 'user']" />
           </span>
-          {{ $t("misc.personal_informartion") }}
-        </button>
+          {{ $t('misc.personal_informartion') }}
+        </router-link>
       </div>
       <div class="w-full border md:w-1/2 lg:w-1/3">
-        <button>
-          <span v-if="athletesMemberships" class="notifications">{{
-            `${athletesMemberships.status} / ${athletesMemberships.stage}`
-          }}</span>
+        <button @click="newAthletes">
+          <span v-if="athletesMemberships" class="notifications">
+            {{ `${athletesMemberships.status}` }}
+          </span>
           <span v-else class="notification">0</span>
           <span class="icon">
             <font-awesome-icon size="2x" :icon="['fas', 'file-contract']" />
           </span>
-          {{ $t("misc.athletes_membership") }}
+          {{ $t('misc.athletes_membership') }}
         </button>
       </div>
       <div class="w-full border md:w-1/2 lg:w-1/3">
-        <button>
-          <span v-if="instructorLicense" class="notifications">{{
-            `${instructorLicense.status} / ${instructorLicense.stage}`
-          }}</span>
+        <button @click="newInstructor">
+          <span v-if="instructorLicense" class="notifications">
+            {{ `${instructorLicense.status}` }}
+          </span>
           <span v-else class="notification">0</span>
           <span class="icon">
             <font-awesome-icon size="2x" :icon="['fas', 'file-contract']" />
           </span>
-          {{ $t("misc.instructor_license") }}
+          {{ $t('misc.instructor_license') }}
         </button>
       </div>
     </div>
@@ -44,30 +44,36 @@ export default {
     return {
       athletesMemberships: null,
       instructorLicense: null,
-    };
+    }
   },
   mounted() {
-    this.getApplication();
+    this.getApplication()
   },
   methods: {
     getApplication() {
-      this.axios.get("/users-applications/").then((data) => {
-        let requests = data.data.requests;
+      this.axios.get('/users-applications/').then((data) => {
+        let requests = data.data.requests
 
         if (requests.length) {
           let athletesMemberships = requests.filter((el) => {
-            return el.purpose == "New Athletes Memberships";
-          });
+            return el.purpose == 'New Athletes Memberships'
+          })
           let instructorLicense = requests.filter((el) => {
-            return el.purpose == "New Instructor License";
-          });
-          this.athletesMemberships = athletesMemberships[0];
-          this.instructorLicense = instructorLicense[0];
+            return el.purpose == 'New Instructor License'
+          })
+          this.athletesMemberships = athletesMemberships[0]
+          this.instructorLicense = instructorLicense[0]
         }
-      });
+      })
+    },
+    newAthletes() {
+      this.$emit('newAthletes')
+    },
+    newInstructor() {
+      this.$emit('newInstructor')
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -77,6 +83,7 @@ export default {
       padding: 40px 0;
       text-align: center;
       position: relative;
+      a,
       button {
         margin: 0 auto;
         display: flex;

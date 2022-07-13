@@ -3,26 +3,30 @@
     <!-- {{ galleries }} -->
     <div class="our-history pb-10 flex justify-between flex-wrap items-center">
       <div class="image basis-1/2 order-1">
-        <img class="w-full" src="../assets/about.png" alt="Our history" />
+        <img
+          class="w-full"
+          src="../assets/about.webp"
+          alt="الاتحاد السعودي للملاحة الشراعية"
+        />
       </div>
       <div
         class="info basis-1/2 flex justify-center px-4 flex-col"
         :class="this.$i18n.locale === 'en' ? 'text-left' : 'text-right'"
       >
         <h3 class="font-bold text-2xl text-primary pb-5 m-0">
-          {{ $t("misc.aboutFederation") }}
+          {{ $t('misc.aboutFederation') }}
         </h3>
         <p class="leading-6 mt-2 text-primary text-sm font-bold">
-          {{ $t("misc.aboutFederationDescription") }}
+          {{ $t('misc.aboutFederationDescription') }}
         </p>
       </div>
     </div>
 
     <div class="about-federation" v-if="false">
       <div class="text">
-        <h3>{{ $t("misc.aboutFederation") }}</h3>
+        <h3>{{ $t('misc.aboutFederation') }}</h3>
         <p>
-          {{ $t("misc.aboutFederationDescription") }}
+          {{ $t('misc.aboutFederationDescription') }}
         </p>
       </div>
     </div>
@@ -45,11 +49,15 @@
           </div>
         </div> -->
         <div class="our-message">
-          <img class="mx-auto" src="../assets/mission.png" alt="mission" />
+          <img
+            class="mx-auto"
+            src="../assets/mission.png"
+            alt="الاتحاد السعودي للملاحة الشراعية"
+          />
           <div class="text">
-            <h4>{{ $t("misc.mission") }}</h4>
+            <h4>{{ $t('misc.mission') }}</h4>
             <p class="text-lg md:text-xl xl:text-2xl">
-              {{ $t("misc.missionDescription") }}
+              {{ $t('misc.missionDescription') }}
             </p>
           </div>
         </div>
@@ -62,10 +70,10 @@
 </template>
 
 <script>
-import Members from "../views/Members.vue";
+import Members from '../views/Members.vue'
 export default {
   components: {
     Members,
   },
-};
+}
 </script>

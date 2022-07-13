@@ -2,13 +2,13 @@
   <section class="kits">
     <div class="sailing">
       <div class="image" :class="scrollSailing ? 'fadeInLeft' : ''">
-        <img src="../assets/2.svg" alt="sailing" />
+        <img src="../assets/2.webp" alt="الاتحاد السعودي للملاحة الشراعية" />
       </div>
       <div class="info-text" :class="scrollSailing ? 'fadeInRight' : ''">
-        <h2>{{ $t("misc.sailing") }}</h2>
-        <p>{{ $t("misc.sailingdesc") }}</p>
+        <h2>{{ $t('misc.sailing') }}</h2>
+        <p>{{ $t('misc.sailingdesc') }}</p>
         <router-link class="btn" to="/contact-us">
-          {{ $t("buttons.sailing") }}
+          {{ $t('buttons.sailing') }}
         </router-link>
       </div>
     </div>
@@ -16,20 +16,20 @@
     <!-- kite sailor -->
     <div class="kite-sailor">
       <div class="image" :class="scrollSailor ? 'fadeInLeft' : ''">
-        <img src="../assets/1.png" alt="kite Serving" />
+        <img src="../assets/1.webp" alt="الاتحاد السعودي للملاحة الشراعية" />
       </div>
       <div class="info-text" :class="scrollSailor ? 'fadeInRight' : ''">
-        <h2>{{ $t("misc.windsurfing") }}</h2>
-        <p>{{ $t("misc.windsurfingdesc") }}</p>
+        <h2>{{ $t('misc.windsurfing') }}</h2>
+        <p>{{ $t('misc.windsurfingdesc') }}</p>
         <router-link class="btn" to="/contact-us">
-          {{ $t("buttons.becomewindsurfing") }}
+          {{ $t('buttons.becomewindsurfing') }}
         </router-link>
       </div>
     </div>
     <!-- kite sailor -->
     <div class="about-us" id="about-us">
       <div class="image" :class="scrollAboutUs ? 'fadeInRight' : ''">
-        <img src="../assets/3.svg" alt="kite Serving" />
+        <img src="../assets/3.webp" alt="الاتحاد السعودي للملاحة الشراعية" />
       </div>
       <div
         class="info-text"
@@ -38,12 +38,12 @@
           this.$i18n.locale === 'en' ? 'text-left' : 'text-right',
         ]"
       >
-        <h2>{{ $t("misc.aboutFederation") }}</h2>
+        <h2>{{ $t('misc.aboutFederation') }}</h2>
         <p>
-          {{ $t("misc.aboutFederationDescription") }}
+          {{ $t('misc.aboutFederationDescription') }}
         </p>
         <router-link class="btn" to="/about">
-          {{ $t("buttons.readMore") }}
+          {{ $t('buttons.readMore') }}
         </router-link>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
       scrollSailor: false,
       scrollSailing: false,
       scrollAboutUs: false,
-    };
+    }
   },
   created() {
     // window.addEventListener("scroll", this.checkScroll);
@@ -98,7 +98,7 @@ export default {
     //   }
     // },
   },
-};
+}
 </script>
 
 <style lang="scss">

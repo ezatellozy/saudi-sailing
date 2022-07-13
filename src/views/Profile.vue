@@ -3,45 +3,44 @@
     <loading v-if="loading" />
     <div class="relative container mx-auto">
       <div class="links" v-if="all">
-        <h3 class="title">{{ $t("misc.personal_informartion") }}</h3>
+        <h3 class="title">{{ $t('misc.personal_informartion') }}</h3>
         <div class="content flex flex-wrap">
           <div class="w-full border md:w-1/2 lg:w-1/3">
-            <button @click="openTabs('personalInformation')">
+            <router-link to="/settings/profile/personalInformation">
               <span class="icon">
                 <font-awesome-icon size="2x" :icon="['fas', 'user']" />
               </span>
-              {{ $t("misc.personal_informartion") }}
-            </button>
+              {{ $t('misc.personal_informartion') }}
+            </router-link>
           </div>
           <div class="w-full border md:w-1/2 lg:w-1/3">
-            <button @click="openTabs('portrait')">
+            <router-link to="/settings/profile/portrait">
               <span class="icon">
                 <font-awesome-icon size="2x" :icon="['fas', 'file-image']" />
               </span>
-              {{ $t("misc.portrait") }}
-            </button>
+              {{ $t('misc.portrait') }}
+            </router-link>
           </div>
           <div class="w-full border md:w-1/2 lg:w-1/3" v-if="false">
             <button>
               <span class="icon">
                 <font-awesome-icon size="2x" :icon="['fas', 'lock']" />
               </span>
-              {{ $t("misc.password") }}
+              {{ $t('misc.password') }}
             </button>
           </div>
         </div>
       </div>
       <div class="info">
         <div class="personal" v-if="personalInformation">
-          <div class="text-left">
-            <button
-              class="link-inside"
-              role="button"
-              @click="openTabs('portrait')"
-            >
-              {{ $t("misc.portrait") }}
+          <div class="flex justify-between items-center mb-11">
+            <h2 class="font-bold text-md">
+              {{ $t('misc.enterPersonalInformation') }}
+            </h2>
+            <router-link to="/settings/profile/portrait" class="link-inside">
+              {{ $t('misc.portrait') }}
               <font-awesome-icon :icon="['fas', 'caret-left']" />
-            </button>
+            </router-link>
           </div>
           <validation-observer
             class="form-container"
@@ -64,9 +63,9 @@
                     v-model="nameEn"
                     :placeholder="$t('inputs.english_name')"
                   />
-                  <label for="english-name">{{
-                    $t("inputs.english_name")
-                  }}</label>
+                  <label for="english-name">
+                    {{ $t('inputs.english_name') }}
+                  </label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -88,9 +87,9 @@
                     v-model="nameAr"
                     :placeholder="$t('inputs.arabic_name')"
                   />
-                  <label for="arabic-name">{{
-                    $t("inputs.arabic_name")
-                  }}</label>
+                  <label for="arabic-name">
+                    {{ $t('inputs.arabic_name') }}
+                  </label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -103,9 +102,9 @@
                 rules="required|min:3|max:80"
                 v-slot="v"
               >
-                <label class="relative visible">{{
-                  $t("inputs.birthdate")
-                }}</label>
+                <label class="relative visible">
+                  {{ $t('inputs.birthdate') }}
+                </label>
                 <div class="group">
                   <font-awesome-icon class="icon" :icon="['far', 'calendar']" />
                   <datepicker
@@ -129,10 +128,10 @@
                 <div class="group">
                   <font-awesome-icon class="icon" :icon="['far', 'user']" />
                   <select v-model="gender">
-                    <option value="male">{{ $t("inputs.male") }}</option>
-                    <option value="female">{{ $t("inputs.female") }}</option>
+                    <option value="male">{{ $t('inputs.male') }}</option>
+                    <option value="female">{{ $t('inputs.female') }}</option>
                   </select>
-                  <label>{{ $t("inputs.gender") }}</label>
+                  <label>{{ $t('inputs.gender') }}</label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -153,7 +152,7 @@
                     v-model="nationality"
                     :placeholder="$t('inputs.nationality')"
                   />
-                  <label>{{ $t("inputs.nationality") }}</label>
+                  <label>{{ $t('inputs.nationality') }}</label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -175,7 +174,7 @@
                     v-model="identityNumber"
                     :placeholder="$t('inputs.identity_number')"
                   />
-                  <label>{{ $t("inputs.identity_number") }}</label>
+                  <label>{{ $t('inputs.identity_number') }}</label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -190,13 +189,17 @@
               >
                 <div class="group">
                   <font-awesome-icon class="icon" :icon="['far', 'user']" />
-                  <input
+                  <select v-model="identityType">
+                    <option value="iqama">{{ $t('inputs.iqama') }}</option>
+                    <option value="other">{{ $t('inputs.other') }}</option>
+                  </select>
+                  <!-- <input
                     type="text"
                     name="identity type"
                     v-model="identityType"
                     :placeholder="$t('inputs.identity_type')"
-                  />
-                  <label>{{ $t("inputs.identity_type") }}</label>
+                  /> -->
+                  <label>{{ $t('inputs.identity_type') }}</label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -209,9 +212,9 @@
                 rules="required|min:3|max:80"
                 v-slot="v"
               >
-                <label class="relative visible">{{
-                  $t("inputs.identity_expiry")
-                }}</label>
+                <label class="relative visible">
+                  {{ $t('inputs.identity_expiry') }}
+                </label>
                 <div class="group">
                   <font-awesome-icon class="icon" :icon="['far', 'user']" />
                   <datepicker
@@ -221,7 +224,7 @@
                     :placeholder="$t('inputs.identity_expiry')"
                     :format="customFormatter"
                   />
-                  <label>{{ $t("inputs.identity_expiry") }}</label>
+                  <label>{{ $t('inputs.identity_expiry') }}</label>
                 </div>
                 <p class="text-red-500 flex mx-auto">
                   {{ v.errors[0] }}
@@ -237,21 +240,21 @@
                 :disabled="invalid"
                 @click="updateProfile"
               >
-                {{ $t("buttons.update_profile") }}
+                {{ $t('buttons.update_profile') }}
               </button>
             </div>
           </validation-observer>
         </div>
         <div class="portr" v-if="portrait">
-          <div class="text-left">
-            <button
+          <div class="flex justify-between items-center mb-11">
+            <h2 class="font-bold text-md">{{ $t('misc.enterPortrait') }}</h2>
+            <router-link
+              to="/settings/profile/personalInformation"
               class="link-inside"
-              role="button"
-              @click="openTabs('personalInformation')"
             >
-              {{ $t("misc.personal_informartion") }}
+              {{ $t('misc.personal_informartion') }}
               <font-awesome-icon :icon="['fas', 'caret-left']" />
-            </button>
+            </router-link>
           </div>
           <validation-observer ref="profilePortrait" v-slot="{ invalid }">
             <div class="form-input">
@@ -265,10 +268,21 @@
                   class="cursor-pointer"
                   for="file_portrait"
                   name="file_portrait"
-                  style="position: relative !important"
+                  style="position: relative !important;"
                 >
                   <div class="image-holder mx-auto mb-4" v-if="file_portrait">
-                    <img class="w-full h-full" :src="preview" alt="image" />
+                    <img
+                      v-if="fromServer"
+                      class="w-full h-full"
+                      :src="`/${preview}`"
+                      alt="image"
+                    />
+                    <img
+                      v-else
+                      class="w-full h-full"
+                      :src="`${preview}`"
+                      alt="image"
+                    />
                   </div>
                   <div class="image-holder mx-auto mb-4" v-else>
                     <img
@@ -279,6 +293,7 @@
                   </div>
                 </label>
                 <input
+                  class="hidden"
                   id="file_portrait"
                   type="file"
                   @input="previewMainMedia($event)"
@@ -296,7 +311,7 @@
                 @click="uploadPortrait"
                 :disabled="invalid"
               >
-                {{ $t("buttons.upload") }}
+                {{ $t('buttons.upload') }}
               </button>
             </div>
           </validation-observer>
@@ -307,153 +322,169 @@
 </template>
 
 <script>
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import Loading from "../components/Loading.vue";
-import Datepicker from "vuejs-datepicker";
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import Loading from '../components/Loading.vue'
+import Datepicker from 'vuejs-datepicker'
 export default {
   components: { Loading, Datepicker },
-  name: "Profile",
+  name: 'Profile',
   data() {
     return {
       loading: false,
       items: null,
       file_portrait: null,
-      nameAr: "",
-      nameEn: "",
-      birthdate: "",
-      gender: "male",
-      nationality: "",
-      identityNumber: "",
-      identityType: "",
-      identityExpiry: "",
+      nameAr: '',
+      nameEn: '',
+      birthdate: '',
+      gender: 'male',
+      nationality: '',
+      identityNumber: '',
+      identityType: 'iqama',
+      identityExpiry: '',
       preview: null,
-      identity_file: "",
+      identity_file: '',
       personalInformation: false,
       all: true,
       portrait: false,
-    };
+      fromServer: false,
+    }
   },
   mounted() {
-    this.fetchProfile();
-    this.fetchPortrait();
+    this.fetchProfile()
+    this.fetchPortrait()
+    this.openTabs(this.$route.params.slug)
   },
   methods: {
-    fetchPro() {
-      this.axios
-        .get(`users-applications/new-application/athletes-membership`)
-        .then((data) => {
-          console.log(data);
-        });
-    },
     fetchProfile() {
-      this.loading = true;
-      this.items = false;
+      this.loading = true
+      this.items = false
       this.axios
         .get(`users/get-profile`)
         .then((data) => {
-          let dataProfile = data.data.profile;
+          let dataProfile = data.data.profile
           if (dataProfile.length != 0) {
-            this.nameAr = dataProfile.name_ar;
-            this.nameEn = dataProfile.name_en;
-            this.birthdate = dataProfile.birthdate;
-            this.gender = dataProfile.gender;
-            this.nationality = dataProfile.nationality;
-            this.identityNumber = dataProfile.identity_number;
-            this.identityType = dataProfile.identity_type;
-            this.identityExpiry = dataProfile.identity_expiry;
+            this.nameAr = dataProfile.name_ar
+            this.nameEn = dataProfile.name_en
+            this.birthdate = dataProfile.birthdate
+            this.gender = dataProfile.gender
+            this.nationality = dataProfile.nationality
+            this.identityNumber = dataProfile.identity_number
+            this.identityType = dataProfile.identity_type
+            this.identityExpiry = dataProfile.identity_expiry
           } else {
-            this.items = dataProfile;
+            this.items = dataProfile
           }
         })
         .catch((err) => {
           if (err.response.status == 401) {
-            this.$router.replace("/login");
+            this.$router.replace('/login')
           }
         })
         .finally(() => {
-          this.items = true;
-          this.loading = false;
-        });
+          this.items = true
+          this.loading = false
+        })
     },
 
     fetchPortrait() {
-      this.axios.get(`users/get-portrait`).then((data) => {
-        console.log(data);
-      });
+      this.axios
+        .get(`users/get-portrait`)
+        .then((data) => {
+          this.preview = data.data.portrait.link
+          if (this.preview == null) {
+            this.fromServer = false
+          } else {
+            this.fromServer = true
+            this.file_portrait = true
+          }
+        })
+        .catch((res) => {
+          console.log(res)
+        })
     },
     uploadPortrait() {
-      this.loading = true;
-      let requestFormData = new FormData();
-
-      requestFormData.append("portrait_file", this.file_portrait);
+      this.loading = true
+      let requestFormData = new FormData()
+      requestFormData.append('portrait_file', this.file_portrait)
       this.axios
         .post(`users/update-portrait`, requestFormData)
-        .then(() => {
-          this.loading = false;
-          this.$refs.profileUpdate.reset();
+        .then((data) => {
+          this.loading = false
+          this.$refs.profilePortrait.reset()
+          this.$toasted.show(data.data.stutus)
+          this.file_portrait = null
+
+          window.location.reload()
         })
         .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
+          console.log(err)
+          this.loading = false
+        })
     },
     updateProfile() {
-      this.loading = true;
-      let requestFormData = new FormData();
-
-      requestFormData.append("name_ar", this.nameAr);
-      requestFormData.append("name_en", this.nameEn);
-      requestFormData.append("birthdate", this.customFormatter(this.birthdate));
-      requestFormData.append("gender", this.gender);
-      requestFormData.append("nationality", this.nationality);
-
-      requestFormData.append("identity_number", this.identityNumber);
-      requestFormData.append("identity_type", this.identityType);
+      this.loading = true
+      let requestFormData = new FormData()
+      requestFormData.append('name_ar', this.nameAr)
+      requestFormData.append('name_en', this.nameEn)
+      requestFormData.append('birthdate', this.customFormatter(this.birthdate))
+      requestFormData.append('gender', this.gender)
+      requestFormData.append('nationality', this.nationality)
+      requestFormData.append('identity_number', this.identityNumber)
+      requestFormData.append('identity_type', this.identityType)
       requestFormData.append(
-        "identity_expiry",
-        this.customFormatter(this.identityExpiry)
-      );
-
+        'identity_expiry',
+        this.customFormatter(this.identityExpiry),
+      )
       this.axios
         .post(`users/update-profile`, requestFormData)
-        .then(() => {
-          this.loading = false;
-          this.$refs.profileUpdate.reset();
+        .then((data) => {
+          this.loading = false
+          this.$toasted.show(data.data.stutus)
+          // this.$refs.profileUpdate.reload()
+          if (data.data.stutus == 'Success') {
+            this.$router.push('/settings/profile/portrait')
+          }
         })
         .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
+          console.log(err)
+          this.loading = false
+        })
     },
     customFormatter(d, tar) {
-      let date = new Date(d);
-      let day = "" + date.getDate();
-      let month = "" + (date.getMonth() + 1);
-      let year = date.getFullYear();
+      let date = new Date(d)
+      let day = '' + date.getDate()
+      let month = '' + (date.getMonth() + 1)
+      let year = date.getFullYear()
 
       if (day.length < 2) {
-        day = `0${day}`;
+        day = `0${day}`
       }
       if (month.length < 2) {
-        month = `0${month}`;
+        month = `0${month}`
       }
-      this[tar] = `${year}-${month}-${day}`;
-      return `${year}-${month}-${day}`;
+      this[tar] = `${year}-${month}-${day}`
+      return `${year}-${month}-${day}`
     },
     previewMainMedia(event) {
       if (event.target.files.length !== 0) {
-        this.file_portrait = event.target.files[0];
-        this.preview = URL.createObjectURL(this.file_portrait);
+        this.fromServer = false
+        this.file_portrait = event.target.files[0]
+        this.preview = URL.createObjectURL(this.file_portrait)
       }
     },
     openTabs(tab) {
-      this.personalInformation = false;
-      this.all = false;
-      this.portrait = false;
-      this[tab] = true;
+      this.personalInformation = false
+      this.all = false
+      this.portrait = false
+      this[tab] = true
     },
   },
-};
+  watch: {
+    $route() {
+      this.openTabs(this.$route.params.slug)
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .content {
@@ -461,7 +492,8 @@ export default {
     padding: 40px 0;
     text-align: center;
     position: relative;
-    button {
+    button,
+    a {
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -490,14 +522,15 @@ export default {
 .image-holder {
   width: 200px;
   height: 150px;
+  img {
+    object-fit: cover;
+  }
 }
-input[type="file"] {
+input[type='file'] {
   position: relative !important;
   opacity: 1 !important;
 }
-.info {
-  button.link-inside {
-    margin-bottom: 30px !important;
-  }
-}
+// .info {
+//   margin-bottom: 30px !important;
+// }
 </style>

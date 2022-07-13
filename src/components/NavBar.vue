@@ -6,25 +6,28 @@
     >
       <div class="container mx-auto flex justify-between">
         <router-link to="/" class="logo">
-          <img src="../assets/logo.png" alt="logo" />
+          <img
+            src="../assets/logo.png"
+            alt="الاتحاد السعودي للملاحة الشراعية"
+          />
         </router-link>
         <div class="nav-items flex flex-1 justify-end">
           <div class="links w-full flex justify-end">
-            <router-link to="/about" class="link">{{
-              $t("buttons.federation")
-            }}</router-link>
-            <router-link to="/events" v-if="false" class="link">{{
-              $t("buttons.events")
-            }}</router-link>
-            <router-link to="/contact-us" class="link">{{
-              $t("buttons.contact")
-            }}</router-link>
-            <router-link to="/license" class="link">{{
-              $t("buttons.license")
-            }}</router-link>
-            <router-link to="/settings/profile" class="link">{{
-              $t("buttons.membership")
-            }}</router-link>
+            <router-link to="/about" class="link">
+              {{ $t('buttons.federation') }}
+            </router-link>
+            <router-link to="/events" v-if="false" class="link">
+              {{ $t('buttons.events') }}
+            </router-link>
+            <router-link to="/contact-us" class="link">
+              {{ $t('buttons.contact') }}
+            </router-link>
+            <router-link to="/license" class="link">
+              {{ $t('buttons.license') }}
+            </router-link>
+            <router-link to="/settings/dashboard" class="link">
+              {{ $t('buttons.membership') }}
+            </router-link>
           </div>
         </div>
       </div>
@@ -32,7 +35,10 @@
     <div class="nav-bar-sm lg:hidden">
       <div class="nav-bar-container-sm">
         <router-link to="/" class="logo">
-          <img src="../assets/logo.png" alt="logo" />
+          <img
+            src="../assets/logo.png"
+            alt="الاتحاد السعودي للملاحة الشراعية"
+          />
         </router-link>
         <div @click="isOpen()" class="nav-btn">
           <span>
@@ -47,25 +53,29 @@
       <div class="nav-menu" id="nav-menu" @click="isOpen()">
         <ul class="nav-items">
           <li>
-            <router-link to="/about" class="link"> Federation </router-link>
+            <router-link to="/about" class="link">
+              {{ $t('buttons.federation') }}
+            </router-link>
           </li>
-          <li>
-            <router-link to="/events" class="link"> Events </router-link>
-          </li>
-          <li>
-            <router-link to="/contact-us" class="link">
-              Get in touch
+          <li v-if="false">
+            <router-link to="/events" class="link">
+              {{ $t('buttons.events') }}
             </router-link>
           </li>
           <li>
-            <router-link to="/license" class="link">{{
-              $t("buttons.license")
-            }}</router-link>
+            <router-link to="/contact-us" class="link">
+              {{ $t('buttons.contact') }}
+            </router-link>
           </li>
           <li>
-            <router-link to="/settings/profile" class="link">{{
-              $t("buttons.membership")
-            }}</router-link>
+            <router-link to="/license" class="link">
+              {{ $t('buttons.license') }}
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/settings/dashboard" class="link">
+              {{ $t('buttons.membership') }}
+            </router-link>
           </li>
         </ul>
       </div>
@@ -77,17 +87,17 @@ export default {
   data() {
     return {
       openMenu: false,
-    };
+    }
   },
   methods: {
     isOpen() {
-      this.openMenu = !this.openMenu;
-      document.getElementById("nav-menu").classList.toggle("opend-menu");
+      this.openMenu = !this.openMenu
+      document.getElementById('nav-menu').classList.toggle('opend-menu')
     },
   },
 
   mounted() {},
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,7 +108,7 @@ export default {
       @apply flex items-center relative overflow-hidden;
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         width: 100%;
         height: 2px;

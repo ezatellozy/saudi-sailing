@@ -1,7 +1,7 @@
 <template>
   <div class="presonal-information">
     <h2 class="text-center text-primary mb-11 font-bold text-xl">
-      {{ $t("misc.personal_informartion") }}
+      {{ $t('misc.personal_informartion') }}
     </h2>
     <validation-observer
       class="form-container"
@@ -24,7 +24,7 @@
               v-model="nameEn"
               :placeholder="$t('inputs.english_name')"
             />
-            <label for="english-name">{{ $t("inputs.english_name") }}</label>
+            <label for="english-name">{{ $t('inputs.english_name') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -46,7 +46,7 @@
               v-model="nameAr"
               :placeholder="$t('inputs.arabic_name')"
             />
-            <label for="arabic-name">{{ $t("inputs.arabic_name") }}</label>
+            <label for="arabic-name">{{ $t('inputs.arabic_name') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -59,7 +59,7 @@
           rules="required|min:3|max:80"
           v-slot="v"
         >
-          <label class="relative visible">{{ $t("inputs.birthdate") }}</label>
+          <label class="relative visible">{{ $t('inputs.birthdate') }}</label>
           <div class="group">
             <font-awesome-icon class="icon" :icon="['far', 'calendar']" />
             <datepicker
@@ -83,10 +83,10 @@
           <div class="group">
             <font-awesome-icon class="icon" :icon="['far', 'user']" />
             <select v-model="gender">
-              <option value="male">{{ $t("inputs.male") }}</option>
-              <option value="female">{{ $t("inputs.female") }}</option>
+              <option value="male">{{ $t('inputs.male') }}</option>
+              <option value="female">{{ $t('inputs.female') }}</option>
             </select>
-            <label>{{ $t("inputs.gender") }}</label>
+            <label>{{ $t('inputs.gender') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -107,7 +107,7 @@
               v-model="nationality"
               :placeholder="$t('inputs.nationality')"
             />
-            <label>{{ $t("inputs.nationality") }}</label>
+            <label>{{ $t('inputs.nationality') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -129,7 +129,7 @@
               v-model="identityNumber"
               :placeholder="$t('inputs.identity_number')"
             />
-            <label>{{ $t("inputs.identity_number") }}</label>
+            <label>{{ $t('inputs.identity_number') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -144,13 +144,17 @@
         >
           <div class="group">
             <font-awesome-icon class="icon" :icon="['far', 'user']" />
-            <input
+            <select v-model="identityType">
+              <option value="iqama">{{ $t('inputs.iqama') }}</option>
+              <option value="other">{{ $t('inputs.other') }}</option>
+            </select>
+            <!-- <input
               type="text"
               name="identity type"
               v-model="identityType"
               :placeholder="$t('inputs.identity_type')"
-            />
-            <label>{{ $t("inputs.identity_type") }}</label>
+            /> -->
+            <label>{{ $t('inputs.identity_type') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -163,9 +167,9 @@
           rules="required|min:3|max:80"
           v-slot="v"
         >
-          <label class="relative visible">{{
-            $t("inputs.identity_expiry")
-          }}</label>
+          <label class="relative visible">
+            {{ $t('inputs.identity_expiry') }}
+          </label>
           <div class="group">
             <font-awesome-icon class="icon" :icon="['far', 'user']" />
             <datepicker
@@ -175,7 +179,7 @@
               :placeholder="$t('inputs.identity_expiry')"
               :format="customFormatter"
             />
-            <label>{{ $t("inputs.identity_expiry") }}</label>
+            <label>{{ $t('inputs.identity_expiry') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
             </p>
@@ -191,7 +195,7 @@
           :disabled="invalid"
           @click="updateProfile"
         >
-          {{ $t("buttons.update_profile") }}
+          {{ $t('buttons.next') }}
         </button>
       </div>
     </validation-observer>
@@ -199,98 +203,100 @@
 </template>
 
 <script>
-import Datepicker from "vuejs-datepicker";
+import Datepicker from 'vuejs-datepicker'
 export default {
   components: { Datepicker },
-  props: ["ApplicantId"],
+  props: ['id'],
   data() {
     return {
-      nameAr: "",
-      nameEn: "",
-      birthdate: "",
-      gender: "",
-      nationality: "",
-      identityNumber: "",
-      identityType: "",
-      identityExpiry: "",
+      nameAr: '',
+      nameEn: '',
+      birthdate: '',
+      gender: 'male',
+      nationality: '',
+      identityNumber: '',
+      identityType: 'iqama',
+      identityExpiry: '',
       preview: null,
-      identity_file: "",
-    };
+      identity_file: '',
+    }
   },
   mounted() {
-    console.log(this.ApplicantId);
-    this.fetchProfile();
+    this.fetchProfile()
   },
   methods: {
     customFormatter(d, tar) {
-      let date = new Date(d);
-      let day = "" + date.getDate();
-      let month = "" + (date.getMonth() + 1);
-      let year = date.getFullYear();
+      let date = new Date(d)
+      let day = '' + date.getDate()
+      let month = '' + (date.getMonth() + 1)
+      let year = date.getFullYear()
 
       if (day.length < 2) {
-        day = `0${day}`;
+        day = `0${day}`
       }
       if (month.length < 2) {
-        month = `0${month}`;
+        month = `0${month}`
       }
-      this[tar] = `${year}-${month}-${day}`;
-      return `${year}-${month}-${day}`;
+      this[tar] = `${year}-${month}-${day}`
+      return `${year}-${month}-${day}`
     },
     updateProfile() {
-      this.loading = true;
-      let requestFormData = new FormData();
-      requestFormData.append("name_ar", this.nameAr);
-      requestFormData.append("name_en", this.nameEn);
-      requestFormData.append("birthdate", this.birthdate);
-      requestFormData.append("gender", this.gender);
-      requestFormData.append("nationality", this.nationality);
-      requestFormData.append("identity_number", this.identityNumber);
-      requestFormData.append("identity_type", this.identityType);
-      requestFormData.append("identity_expiry", this.identityExpiry);
-
+      this.loading = true
+      let requestFormData = new FormData()
+      requestFormData.append('name_ar', this.nameAr)
+      requestFormData.append('name_en', this.nameEn)
+      requestFormData.append('birthdate', this.customFormatter(this.birthdate))
+      requestFormData.append('gender', this.gender)
+      requestFormData.append('nationality', this.nationality)
+      requestFormData.append('identity_number', this.identityNumber)
+      requestFormData.append('identity_type', this.identityType)
+      requestFormData.append(
+        'identity_expiry',
+        this.customFormatter(this.identityExpiry),
+      )
       this.axios
         .post(
           `users-applications/confirm-applicant-profile/${this.id}`,
-          requestFormData
+          requestFormData,
         )
         .then((data) => {
-          this.loading = false;
-          this.$toasted.show(data.data.message);
-          if (data.data.status == "Success") {
-            this.$emit("goStep", 1);
+          this.loading = false
+          this.$toasted.show(data.data.message)
+          if (data.data.status == 'Success') {
+            this.$router.push(
+              `/settings/athletes-membership/${this.id}/new/step2`,
+            )
           }
         })
         .catch((err) => {
-          console.log(err);
-          this.loading = false;
-        });
+          console.log(err)
+          this.loading = false
+        })
     },
     fetchProfile() {
-      this.loading = true;
+      this.loading = true
       this.axios
-        .get(`users-applications/get-applicant-profile/${this.ApplicantId}`)
+        .get(`users-applications/get-applicant-profile/${this.id}`)
         .then((data) => {
-          let dataProfile = data.data.applicant_profile;
-          console.log(dataProfile);
+          let dataProfile = data.data.applicant_profile
           if (dataProfile.length != 0) {
-            this.nameAr = dataProfile.name_ar;
-            this.nameEn = dataProfile.name_en;
-            this.birthdate = dataProfile.birthdate;
-            this.gender = dataProfile.gender;
-            this.nationality = dataProfile.nationality;
-            this.identityNumber = dataProfile.identity_number;
-            this.identityType = dataProfile.identity_type;
-            this.identityExpiry = dataProfile.identity_expiry;
+            this.nameAr = dataProfile.name_ar
+            this.nameEn = dataProfile.name_en
+            this.birthdate = dataProfile.birthdate
+            this.gender = dataProfile.gender
+            this.nationality = dataProfile.nationality
+            this.identityNumber = dataProfile.identity_number
+            this.identityType = dataProfile.identity_type
+            this.identityExpiry = dataProfile.identity_expiry
           }
+          this.loading = false
         })
         .finally(() => {
-          this.items = true;
-          this.loading = false;
-        });
+          this.items = true
+        })
     },
   },
-};
+}
 </script>
 
 <style></style>

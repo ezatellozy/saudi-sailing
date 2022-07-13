@@ -12,16 +12,18 @@
           />
         </span>
         <router-link
-          :to="{ name: 'Login' }"
+          :to="{ name: 'login' }"
           class="px-1 text-secondary text-lg"
-          >{{ $t("buttons.login") }}</router-link
         >
+          {{ $t('buttons.login') }}
+        </router-link>
         <span class="text-secondary text-lg font-bold">/</span>
         <router-link
-          :to="{ name: 'Register' }"
+          :to="{ name: 'register' }"
           class="px-1 text-secondary font-bold"
-          >{{ $t("buttons.signUp") }}</router-link
         >
+          {{ $t('buttons.signUp') }}
+        </router-link>
       </div>
       <div v-else>
         <profile />
@@ -60,8 +62,8 @@
 </template>
 
 <script>
-import LocaleSwitcher from "../components/LocaleSwitcher.vue";
-import Profile from "../components/Profile.vue";
+import LocaleSwitcher from '../components/LocaleSwitcher.vue'
+import Profile from '../components/Profile.vue'
 export default {
   components: {
     LocaleSwitcher,
@@ -70,27 +72,27 @@ export default {
   data() {
     return {
       scroll: false,
-    };
+    }
   },
   created() {
-    window.addEventListener("scroll", this.checkScroll);
+    window.addEventListener('scroll', this.checkScroll)
   },
   methods: {
     checkScroll() {
       if (window.scrollY > 50) {
-        this.scroll = true;
-        return;
+        this.scroll = true
+        return
       }
-      this.scroll = false;
-      return;
+      this.scroll = false
+      return
     },
   },
   computed: {
     isLogedIn() {
-      return this.$store.getters.isLogedIn;
+      return this.$store.getters.isLogedIn
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

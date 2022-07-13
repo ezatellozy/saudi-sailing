@@ -1,15 +1,16 @@
 <template>
   <section>
+    <Loading v-if="loading" />
     <div class="relative">
       <small-card>
         <h3 class="text-primary font-bold text-center my-5 text-lg md:text-xl">
-          Create an Account
+          {{ $t('misc.Create an account') }}
         </h3>
         <div class="p-4">
           <validation-observer v-slot="{ invalid }">
             <div class="form-input">
               <validation-provider
-                name="user_name"
+                name="name"
                 rules="required|min:3|max:80"
                 v-slot="v"
               >
@@ -17,19 +18,22 @@
                   <font-awesome-icon class="icon" :icon="['fas', 'user']" />
                   <input
                     type="text"
-                    name="user_name"
-                    v-model="userName"
-                    placeholder="User Name"
+                    name="name"
+                    v-model="user.name"
+                    :placeholder="$t('misc.Enter username')"
                   />
+                  <p class="text-red-500" v-if="v.errors[0]">
+                    {{ $t(`misc.${v.errors[0]}`) }}
+                  </p>
+                  <p v-if="resErrors" class="text-red-500 text-sm flex mx-auto">
+                    {{ resErrors.name }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
               <validation-provider
-                name="name"
+                name="email"
                 rules="required|min:3|max:80"
                 v-slot="v"
               >
@@ -38,18 +42,23 @@
                   <input
                     type="email"
                     name="email"
-                    v-model="email"
-                    placeholder="Email"
+                    v-model="user.email"
+                    :placeholder="$t('inputs.email')"
                   />
+                  <p class="text-red-500" v-if="v.errors[0]">
+                    {{ $t(`misc.${v.errors[0]}`) }}
+                  </p>
+                  <p v-if="resErrors" class="text-red-500 text-sm flex mx-auto">
+                    <span v-if="resErrors.email">
+                      {{ resErrors.email.unique }}
+                    </span>
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
               <validation-provider
-                name="name"
+                name="phone"
                 rules="required|min:3|max:80"
                 v-slot="v"
               >
@@ -58,20 +67,25 @@
                   <input
                     type="phone"
                     name="phone"
-                    v-model="phone"
-                    placeholder="Phone"
+                    v-model="user.mobile"
+                    :placeholder="$t('inputs.phoneNumber')"
                   />
+                  <p class="text-red-500" v-if="v.errors[0]">
+                    {{ $t(`misc.${v.errors[0]}`) }}
+                  </p>
+                  <p v-if="resErrors" class="text-red-500 text-sm flex mx-auto">
+                    <span v-if="resErrors.mobile">
+                      {{ resErrors.mobile.unique }}
+                    </span>
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
               <validation-provider
                 name="password"
                 ref="password"
-                rules="required|min:3|max:80"
+                rules="required|min:6|max:80"
                 v-slot="v"
               >
                 <div class="group">
@@ -79,18 +93,21 @@
                   <input
                     type="password"
                     name="password"
-                    v-model="password"
-                    placeholder="Password"
+                    v-model="user.password"
+                    :placeholder="$t(`misc.password`)"
                   />
+                  <p class="text-red-500" v-if="v.errors[0]">
+                    {{ $t(`misc.${v.errors[0]}`) }}
+                  </p>
+                  <p v-if="resErrors" class="text-red-500 text-sm flex mx-auto">
+                    {{ resErrors.password }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
             <div class="form-input">
               <validation-provider
-                name="confirm_password"
+                name="cPassword"
                 rules="required|min:3|max:80|confirmed:password"
                 v-slot="v"
               >
@@ -98,16 +115,19 @@
                   <font-awesome-icon class="icon" :icon="['fas', 'lock']" />
                   <input
                     type="password"
-                    name="confirm_password"
-                    v-model="confirmPassword"
-                    placeholder="Confirm Password"
+                    name="cPassword"
+                    v-model="user.confirmPassword"
+                    :placeholder="$t(`misc.confirm password`)"
                   />
+                  <p class="text-red-500" v-if="v.errors[0]">
+                    {{ $t(`misc.${v.errors[0]}`) }}
+                  </p>
                 </div>
-                <p class="text-red-500 flex mx-auto">
-                  {{ v.errors[0] }}
-                </p>
               </validation-provider>
             </div>
+            <p class="text-red-500 mt-11 font-bold text-center" v-if="status">
+              {{ status }}
+            </p>
             <div class="flex mt-11 justify-center">
               <button
                 class="border rounded-xl px-4 py-2 font-bold text-lg bg-primary text-white border-primary"
@@ -117,14 +137,18 @@
                 @click="register()"
                 :disabled="invalid"
               >
-                Register
+                {{ $t('buttons.signUp') }}
               </button>
             </div>
           </validation-observer>
         </div>
         <div class="flex justify-center mt-4 text-center font-bold text-sm">
-          <p class="text-primary mx-2">Already have an account?</p>
-          <a class="text-secondary" href="/login">Sign in Instead</a>
+          <p class="text-primary mx-2">
+            {{ $t('misc.Already have an account?') }}
+          </p>
+          <a class="text-secondary" href="/login">
+            {{ $t('misc.Sign in Instead') }}
+          </a>
         </div>
       </small-card>
     </div>
@@ -132,39 +156,78 @@
 </template>
 
 <script>
+import Loading from './Loading.vue'
 // import BaseCard from "../ui/BaseCard.vue";
 export default {
   // components: { BaseCard },
-  name: "Register",
+  name: 'Register',
   data() {
     return {
-      userName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-    };
+      user: {
+        name: '',
+        email: '',
+        password: '',
+        mobile: '',
+        confirmPassword: '',
+      },
+
+      // resErrors: null,
+      // loading: false,
+    }
   },
-
-  methods: {
-    register() {
-      const data = new FormData();
-      data.append("name", this.userName);
-      data.append("email", this.email);
-      data.append("password", this.password);
-      data.append("mobile", this.phone);
-
-      this.axios
-        .post("users/signup", data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  computed: {
+    resErrors() {
+      return this.$store.getters.resErrors
+    },
+    status() {
+      return this.$store.getters.status
+    },
+    loading() {
+      return this.$store.getters.loading
     },
   },
-};
+  watch: {
+    status(val) {
+      if (val) {
+        this.$toasted.show(val)
+      }
+    },
+  },
+  methods: {
+    register() {
+      this.$store.dispatch('register', this.user)
+
+      // const data = new FormData()
+      // data.append('name', this.userName)
+      // data.append('email', this.email)
+      // data.append('password', this.password)
+      // data.append('mobile', this.phone)
+      // this.axios
+      //   .post('users/signup', data)
+      //   .then((res) => {
+      //     console.log(res)
+      //     this.resErrors = res.data.errors
+      //     console.log(res.data)
+      //     this.$toasted.show(res.data.message)
+      //     if (res.data.status == 'Success') {
+      //       sessionStorage.setItem('user', JSON.stringify(res.data.user))
+      //       sessionStorage.setItem('token', res.data.token)
+      //       this.$store.commit('setUser', res.data.user)
+      //       this.$store.commit('setToken', res.data.token)
+      //       setTimeout(() => {
+      //         window.location.reload()
+      //       }, 1000)
+      //     }
+      //     this.loading = false
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //     this.loading = false
+      //   })
+    },
+  },
+  components: { Loading },
+}
 </script>
 <style scoped lang="scss">
 .form-input {

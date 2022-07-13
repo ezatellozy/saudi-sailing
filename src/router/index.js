@@ -1,178 +1,178 @@
 // import Cookies from "js-cookie";
-import Vue from "vue";
-import VueRouter from "vue-router";
-import store from "../store";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import store from '../store'
 // import VueI18n from "vue-i18n";
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("@/views/Home.vue"),
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/Home.vue'),
     meta: {
-      title: "Home",
+      title: 'Home',
     },
   },
   {
-    path: "/events",
-    name: "Events",
-    component: () => import("@/views/Events.vue"),
+    path: '/events',
+    name: 'events',
+    component: () => import('@/views/Events.vue'),
     meta: {
-      title: "Events",
+      title: 'Events',
     },
   },
   {
-    path: "/news",
-    name: "News",
-    component: () => import("@/views/News.vue"),
+    path: '/news',
+    name: 'news',
+    component: () => import('@/views/News.vue'),
     meta: {
-      title: "News",
+      title: 'News',
     },
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("@/views/About.vue"),
+    path: '/about',
+    name: 'about',
+    component: () => import('@/views/About.vue'),
     meta: {
-      title: "About",
+      title: 'About',
     },
   },
   {
-    path: "/license",
-    name: "license",
-    component: () => import("@/components/Accordian.vue"),
+    path: '/license',
+    name: 'license',
+    component: () => import('@/components/Accordian.vue'),
     meta: {
-      title: "License",
+      title: 'License',
     },
   },
   {
-    path: "/contact-us",
-    name: "contact-us",
-    component: () => import("@/components/Contact.vue"),
+    path: '/contact-us',
+    name: 'contact-us',
+    component: () => import('@/components/Contact.vue'),
     meta: {
-      title: "Contact us",
+      title: 'Contact us',
     },
   },
 
   {
-    path: "/login",
-    name: "Login",
-    component: () => import("@/views/Login.vue"),
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login.vue'),
     meta: {
       guest: true,
-      title: "login",
+      title: 'login',
     },
   },
   {
-    path: "/settings",
-    name: "Settings",
+    path: '/settings',
+    name: 'settings',
     props: true,
-    component: () => import("@/views/Settings.vue"),
+    component: () => import('@/views/Settings.vue'),
     meta: {
       auth: true,
-      title: "settings",
+      title: 'settings',
     },
     children: [
       {
-        path: "profile",
-        name: "profile",
-        component: () => import("@/views/Profile.vue"),
+        path: 'profile/:slug',
+        name: 'profile',
+        component: () => import('@/views/Profile.vue'),
         meta: {
           auth: true,
-          title: "Profile",
+          title: 'Profile',
         },
       },
       {
-        path: "athletes-membership/:id",
-        name: "AthletesMembership",
-        component: () => import("@/components/AthletesMembership.vue"),
+        path: 'athletes-membership/:id/:status/:step',
+        name: 'athletes-membership',
+        component: () => import('@/components/AthletesMembership.vue'),
         meta: {
           auth: true,
-          title: "AthletesMembership",
+          title: 'AthletesMembership',
         },
       },
       {
-        path: "instructor-license/:id",
-        name: "InstructorLicense",
-        component: () => import("@/components/InstructorLicense.vue"),
+        path: 'instructor-license/:id/:status/:step',
+        name: 'instructor-license',
+        component: () => import('@/components/InstructorLicense.vue'),
         meta: {
           auth: true,
-          title: "InstructorLicense",
+          title: 'InstructorLicense',
         },
       },
       {
-        path: "dashboard",
-        name: "dashboard",
-        component: () => import("@/components/Dashboard.vue"),
+        path: 'dashboard',
+        name: 'dashboard',
+        component: () => import('@/components/Dashboard.vue'),
         meta: {
           auth: true,
-          title: "dashboard",
+          title: 'dashboard',
         },
       },
     ],
   },
   {
-    path: "/register",
-    name: "Register",
-    component: () => import("@/views/Register.vue"),
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/Register.vue'),
     meta: {
       guest: true,
-      title: "Register",
+      title: 'Register',
     },
   },
   {
-    path: "/forgot-password",
-    name: "ForgotPassword",
-    component: () => import("@/views/ForgotPassword.vue"),
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: () => import('@/views/ForgotPassword.vue'),
     meta: {
       guest: true,
-      title: "ForgotPassword",
+      title: 'ForgotPassword',
     },
   },
 
   {
-    path: "*",
-    name: "Not Found",
-    component: () => import("@/views/NotFound.vue"),
+    path: '*',
+    name: 'not found',
+    component: () => import('@/views/NotFound.vue'),
     meta: {
-      title: "Not Found",
+      title: 'Not Found',
     },
   },
-];
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition;
+      return savedPosition
     } else {
-      return { x: 0, y: 0 };
+      return { x: 0, y: 0 }
     }
   },
-});
+})
 
-const originalPush = VueRouter.prototype.push;
+const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch((err) => err);
-};
+  return originalPush.call(this, location).catch((err) => err)
+}
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} | SaudiSailing`;
-  next();
-});
+  document.title = `${to.meta.title} | SaudiSailing`
+  next()
+})
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters.isLogedIn) {
-    next("/login");
+    next('/login')
   } else if (to.meta.guest && store.getters.isLogedIn) {
-    next("/");
+    next('/')
   } else {
-    next();
+    next()
   }
-});
+})
 
-export default router;
+export default router
