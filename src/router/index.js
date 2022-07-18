@@ -40,6 +40,22 @@ const routes = [
     },
   },
   {
+    path: '/sailling',
+    name: 'sailling',
+    component: () => import('@/views/AboutSailling.vue'),
+    meta: {
+      title: 'Sailling',
+    },
+  },
+  {
+    path: '/kites',
+    name: 'kites',
+    component: () => import('@/views/AboutKites.vue'),
+    meta: {
+      title: 'Kites',
+    },
+  },
+  {
     path: '/license',
     name: 'license',
     component: () => import('@/components/Accordian.vue'),

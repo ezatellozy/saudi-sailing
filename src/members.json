@@ -1,0 +1,81 @@
+ [
+    {
+        "membersEn":[       
+            {
+            "id": 1,
+            "src": "./img/fahad-toonsi.jpg",
+            "name": "H.E. Dr. Fahad Abdallah Toonsi",
+            "description": "Board Member"
+
+          },
+          {
+            "id": 2,
+            "src": "./img/hassan-kabbani.jpg",
+            "name": "Hassan Essam Kabbani",
+            "description": "Board Member"
+          },
+          {
+            "id": 3,
+            "src": "./img/nasser-farsi.png",
+            "name": "Nasser Jamil Farsi ",
+            "description": "Board Member"
+          },
+          {
+            "id": 4,
+            "src": "./img/member.png",
+            "name": "Albaraa Osama Saimaldahar",
+            "description": "Board Member"
+          },
+          {
+            "id": 5,
+            "src": "./img/member.png",
+            "name": "Dina Hassan Shabib",
+            "description": "Board Member"
+          },
+          {
+            "id": 6,
+            "src": "./img/member.png",
+            "name": "Faisal Saad Binladen",
+            "description": "Board Member"
+          }
+        ],
+        "membersAr":[
+          {
+            "id": 1,
+            "src": "./img/fahad-toonsi.jpg",
+            "name": "الأستاذ / حسان بن عصام قباني ",
+            "description": "رئيس والأمين العام"
+          },
+          {
+            "id": 2,
+            "src": "@/assets/member.png",
+            "name": "معالي الدكتور/ فهد بن عبدالله تونسي ",
+            "description": "عضو مجلس إدارة"
+          },
+          {
+            "id": 3,
+            "src": "../assets/member.png",
+            "name": "الأستاذ / ناصر جميل فارسي ",
+            "description": "عضو مجلس إدارة"
+          },
+          {
+            "id": 4,
+            "src": "../assets/member.png",
+            "name": "الأستاذ / البراء بن أسامة صائم الدهر",
+            "description": "عضو مجلس إدارة"
+          },
+          {
+            "id": 5,
+            "src": "../assets/member.png",
+            "name": "الأستاذة / دينا بنت حسن شبيب ",
+            "description": "عضو مجلس إدارة"
+          },
+          {
+            "id": 6,
+            "src": "../assets/member.png",
+            "name": "الأستاذ / فيصل سعد بن لادن ",
+            "description": "عضو مجلس إدارة"
+          }]
+    }
+
+    ]

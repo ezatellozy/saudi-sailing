@@ -15,6 +15,7 @@ import {
 import Vue from "vue";
 import VueAxios from "vue-axios";
 import Toasted from "vue-toasted";
+import i18n from "./i18n";
 import store from "./store";
 
 // you can also pass options, check options reference below
@@ -37,6 +38,7 @@ Vue.component("validation-provider", ValidationProvider);
 Vue.component("validation-observer", ValidationObserver);
 
 axios.defaults.baseURL = "https://sailsaudi.com/api";
+axios.defaults.headers = {"Accept-Language": i18n.locale};
 
 if (store.state.token) {
   axios.defaults.headers.common["Authorization"] =

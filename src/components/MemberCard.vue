@@ -7,9 +7,9 @@
         class="card-img"
         alt="الاتحاد السعودي للملاحة الشراعية"
       />
-      <div class="card-body p-5">
+      <div class="card-body p-5 flex flex-col justify-between">
         <h4
-          class="card-title text-primary mt-5 text-left font-bold text-lg lg:text-2xl"
+          class="card-title text-primary mt-5 text-left font-bold text-md lg:text-lg"
         >
           {{ member.name }}
         </h4>
@@ -30,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 .card {
   box-shadow: 0px 3px 6px #00000029;
+  min-height: 140px;
   .card-img {
     position: absolute;
     width: 70px;

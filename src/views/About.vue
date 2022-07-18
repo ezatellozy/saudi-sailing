@@ -19,6 +19,9 @@
         <p class="leading-6 mt-2 text-primary text-sm font-bold">
           {{ $t('misc.aboutFederationDescription') }}
         </p>
+        <p class="mt-0 text-primary text-sm font-bold">
+          {{ $t('misc.aboutFederationDescription1') }}
+        </p>
       </div>
     </div>
 
@@ -27,6 +30,9 @@
         <h3>{{ $t('misc.aboutFederation') }}</h3>
         <p>
           {{ $t('misc.aboutFederationDescription') }}
+        </p>
+        <p class="mt-0">
+          {{ $t('misc.aboutFederationDescription1') }}
         </p>
       </div>
     </div>

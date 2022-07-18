@@ -7,8 +7,8 @@
       <div class="info-text" :class="scrollSailing ? 'fadeInRight' : ''">
         <h2>{{ $t('misc.sailing') }}</h2>
         <p>{{ $t('misc.sailingdesc') }}</p>
-        <router-link class="btn" to="/contact-us">
-          {{ $t('buttons.sailing') }}
+        <router-link class="btn" to="/sailling">
+          {{ $t('buttons.readMore') }}
         </router-link>
       </div>
     </div>
@@ -21,8 +21,8 @@
       <div class="info-text" :class="scrollSailor ? 'fadeInRight' : ''">
         <h2>{{ $t('misc.windsurfing') }}</h2>
         <p>{{ $t('misc.windsurfingdesc') }}</p>
-        <router-link class="btn" to="/contact-us">
-          {{ $t('buttons.becomewindsurfing') }}
+        <router-link class="btn" to="/kites">
+          {{ $t('buttons.readMore') }}
         </router-link>
       </div>
     </div>
@@ -41,6 +41,9 @@
         <h2>{{ $t('misc.aboutFederation') }}</h2>
         <p>
           {{ $t('misc.aboutFederationDescription') }}
+        </p>
+        <p class="mt-0">
+          {{ $t('misc.aboutFederationDescription1') }}
         </p>
         <router-link class="btn" to="/about">
           {{ $t('buttons.readMore') }}

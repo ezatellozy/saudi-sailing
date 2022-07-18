@@ -1,7 +1,7 @@
 <template>
   <section class="pt-10 pb-10" v-if="members.length">
     <h3 class="text-center text-primary mb-4 text-3xl font-bold">
-      {{ $t("misc.members") }}
+      {{ $t('misc.members') }}
     </h3>
     <div>
       <vue-slick-carousel v-bind="settings">
@@ -13,10 +13,11 @@
   </section>
 </template>
 <script>
-import MemberCard from "../components/MemberCard.vue";
-import VueSlickCarousel from "vue-slick-carousel";
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-import "vue-slick-carousel/dist/vue-slick-carousel.css";
+import MemberCard from '../components/MemberCard.vue'
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import Members from '@/members.json'
 export default {
   components: {
     MemberCard,
@@ -25,56 +26,6 @@ export default {
   data() {
     return {
       members: [],
-      // members: [
-      //   {
-      //     id: 1,
-      //     src: "@/assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 2,
-      //     src: "@/assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 3,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 4,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 5,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 6,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 7,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      //   {
-      //     id: 8,
-      //     src: "../assets/member.png",
-      //     name: "DR Mohamed ahmed",
-      //     description: "see of aailling company",
-      //   },
-      // ],
       settings: {
         arrows: true,
         centerMode: true,
@@ -105,9 +56,20 @@ export default {
           },
         ],
       },
-    };
+    }
   },
-};
+  mounted() {
+    this.getMembers()
+  },
+  methods: {
+    getMembers() {
+      console.log(Members)
+      this.$i18n.locale == 'ar'
+        ? (this.members = Members[0].membersAr)
+        : (this.members = Members[0].membersEn)
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .cards {
