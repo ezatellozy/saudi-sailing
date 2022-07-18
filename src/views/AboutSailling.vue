@@ -1,11 +1,10 @@
 <template>
   <section class="about">
-    <!-- {{ galleries }} -->
     <div class="our-history pb-10 flex justify-between flex-wrap items-center">
       <div class="image basis-1/2 order-1">
         <img
           class="w-full"
-          src="../assets/about.webp"
+          src="/images/2.webp"
           alt="الاتحاد السعودي للملاحة الشراعية"
         />
       </div>
@@ -14,72 +13,111 @@
         :class="this.$i18n.locale === 'en' ? 'text-left' : 'text-right'"
       >
         <h3 class="font-bold text-2xl text-primary pb-5 m-0">
-          {{ $t('misc.aboutFederation') }}
+          {{ $t('misc.sailing') }}
         </h3>
         <p class="leading-6 mt-2 text-primary text-sm font-bold">
-          {{ $t('misc.aboutFederationDescription') }}
-        </p>
-        <p class="mt-0 text-primary text-sm font-bold">
-          {{ $t('misc.aboutFederationDescription1') }}
+          {{ $t('misc.sailingdesc') }}
         </p>
       </div>
     </div>
-
-    <div class="about-federation" v-if="false">
-      <div class="text">
-        <h3>{{ $t('misc.aboutFederation') }}</h3>
-        <p>
-          {{ $t('misc.aboutFederationDescription') }}
-        </p>
-        <p class="mt-0">
-          {{ $t('misc.aboutFederationDescription1') }}
-        </p>
-      </div>
-    </div>
-
-    <div class="message">
+    <div class="benfits">
       <div class="container mx-auto">
-        <!-- <div class="our-message">
-          <img src="../assets/vision.png" alt="vision" />
-          <div class="text">
-            <h4>Our vision</h4>
+        <h2 class="text-center">
+          الإبحار الشراعي
+          <br />
+          القدرة على التحكم بالقارب أو الواسطة البحرية و توجيهها باستخدام الشراع
+          و الرياح
+        </h2>
+        <div class="sports">
+          <div class="image"></div>
+          <div class="description">
+            <h2>رياضات الإبحارالشراعي</h2>
             <p>
-              when an unknown printer took a galley of type and scrambled it to
-              make a type specimen book. It has survived not only five
-              centuries, but also the leap into electronic typesetting,
-              remaining essentially unchanged. .when an unknown printer took a
-              galley of type and scrambled it to make a type specimen book. It
-              has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
+              هي رياضات أولمبية تتصف بفن التحكم بالقارب أو الواسطة البحرية
+              باستخدام الشراع و توجيه مساره على سطح الماء وكذلك ضبط سرعتهما
+              وموازنتهما في مواجهة الرياح والأمواج. ذلك يتطلب خبرات وفهم عميق
+              لتقلبات البحر ورياحه وتياراته، وكذلك قدرات بدنية من تحمل للقوة
+              ومرونة. و منها رياضة القوارب الشراعية معروفة أيضاً بالشراع فقط، و
+              رياضات التزلج الشراعي و يندرج تحتها الكايت بورد و الوند سيرف.
             </p>
           </div>
-        </div> -->
-        <div class="our-message">
-          <img
-            class="mx-auto"
-            src="../assets/mission.png"
-            alt="الاتحاد السعودي للملاحة الشراعية"
-          />
-          <div class="text">
-            <h4>{{ $t('misc.mission') }}</h4>
-            <p class="text-lg md:text-xl xl:text-2xl">
-              {{ $t('misc.missionDescription') }}
+        </div>
+        <div class="sports">
+          <div class="image"></div>
+          <div class="description">
+            <h2>الإبحار الشراعي (من منظور رياضي) / الإبحار الشراعي كرياضة</h2>
+            <p>
+              كانت تصنف رياضة الإبحار الشراعي (المعروفة سابقاًبالإبحار باليخت
+              حتى عام 2000) ضمن إحدى الرياضات الأولمبية منذ دورة الألعاب
+              الأولمبية الأولى، التي أقيمت في أثينا، اليونان، في عام 1896. على
+              الرغم من كونها مقررة في البرنامج الأولمبي الأول، فقد تم إلغاء
+              السباقات في صيف 1904 بسبب سوء الأحوال الجوية. ولكن من بعد ذلك
+              العام، كان الإبحار حاضراً في كل طبعة من الألعاب الأولمبية.
             </p>
           </div>
         </div>
       </div>
+      <div class="benifit">
+        <h2>منافع الإبحار والرياضات الشراعية</h2>
+        <div class="ben">
+          <h5>الصحة العقلية</h5>
+          <p>
+            يرتبط الإبحار الشراعي بشكل مباشر مع العوامل البيئية الطبيعية،حيث
+            يعتمد في ممارسته على الرياح و الماء فقط. و هذا الاحتكاك يولد تأثير
+            إيجابي ومعنوي على الصحة البدنية والعقلية حيث تسهم في تقوية البدن و
+            تصفية الذهن فانه يضع الممارس في اصفى انواع الطبيعة في وسط البحر من
+            غير عوامل تلوث سمعية وبصرية. الإبحار الشراعي يفتح المجال للممارس أن
+            يكون متصل بحواسه مما يأدي إلى تصفية الذهن و الارتياح التام.
+          </p>
+        </div>
+        <div class="ben">
+          <h5>التأثيرات البيئية للإبحار الشراعي</h5>
+          <p>
+            الابحار الشراعي رياضة صديقة للبيئة. فهي تعتمد كلياً في ممارستها على
+            العوامل الطبيعية فقط. حيث يستغل الإبحار الشراعي طاقة الرياح للدفع
+            فوق سطح الماء باستخدام شراع قماشي بدلا من محرك ميكانيكي، بالتالي هذا
+            النوع من المركبات لايطلق أي ملوثات مثل البنزين أو الغازات الضارة في
+            الماء أو الهواء ولا تترك أثراً ضاراً على البيئة البحرية أو بما يتعلق
+            بالكائنات البحرية في الماء.
+          </p>
+        </div>
+        <div class="ben">
+          <h5>الإبحار لأغراض تعليمية</h5>
+          <p>
+            يمكن للفرد أن يبدأ التدريب على الإبحار الشراعي بعمر 8 سنوات، وكلما
+            كان أصغر سنًا، أصبحت ممارسة الرياضة هواية مفيدة في حياته. يلعب
+            الإبحار دوراً كبيراً في تعزيز مهارات الطفل ، بحيث يساعده في مهاراته
+            البدنية في التحكم في سير و سرعة القارب، بالإضافة إلى ما تتطلبه
+            الرياضة من العمل الجماعي و تحمل المسؤولية. يساعد الإبحار الأطفال في
+            الحصول على خبرة في تعلم الديناميكا الهوائية والديناميكا المائية
+            ومهارة إستغلالهما معاً. و زيادة على ذلك فإن قوارب الشراع و معدات
+            التزلج الشراعي معدات يدوية سهلة التركيب والتفكيك. حيث ذلك،تعلم الطفل
+            كيفية صنع القوارب و كيفية تكريبها بشكل محكم فان هذا العمل ينمي مهارة
+            التدقيق والصبر فان لم يجيدها سقط.
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="members-container">
-      <members />
+    <div class="typs">
+      <div class="container mx-auto">
+        <h3>الرياضات المدرجة تحت الإبحار الشراعي</h3>
+        <div class="sport">
+          <h5>
+            رياضة الإبحار الشراعي – بواسطة القارب الشراعي:
+          </h5>
+          <p>
+            واسطة بحرية تندفع بالرياح كلياً عن طريق الأشرعة أو بمساندة محرك.
+            تُصّنف القوارب الشراعية حسب أحجامها ووضع أشرعتها وترتيب صواريها و
+            نوع عارضتها مثل زورق الدنجي و الفلوكة و قوارب الكِيل و اليخت...الخ.
+            كما تختلف في الهدف منها مثل القوارب الشراعية للسباقات أو للتنزه
+            والترفيه.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-import Members from '../views/Members.vue'
-export default {
-  components: {
-    Members,
-  },
-}
+export default {}
 </script>

@@ -17,7 +17,7 @@ import MemberCard from '../components/MemberCard.vue'
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import Members from '@/members.json'
+import Members from '/public/data/members.json'
 export default {
   components: {
     MemberCard,
@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     getMembers() {
-      console.log(Members)
       this.$i18n.locale == 'ar'
         ? (this.members = Members[0].membersAr)
         : (this.members = Members[0].membersEn)
