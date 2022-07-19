@@ -148,12 +148,6 @@
               <option value="iqama">{{ $t('inputs.iqama') }}</option>
               <option value="other">{{ $t('inputs.other') }}</option>
             </select>
-            <!-- <input
-              type="text"
-              name="identity type"
-              v-model="identityType"
-              :placeholder="$t('inputs.identity_type')"
-            /> -->
             <label>{{ $t('inputs.identity_type') }}</label>
             <p class="text-red-500 text-sm text-center">
               {{ v.errors[0] }}
