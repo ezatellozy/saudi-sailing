@@ -77,4 +77,10 @@
       right: 30px;
     }
   }
+  .form-input {
+    > span > label {
+      left: unset;
+      right: 30px;
+    }
+  }
 }

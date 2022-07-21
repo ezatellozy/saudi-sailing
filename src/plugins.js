@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // import store from "./store";
 import axios from "axios";
 // import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { extend } from "vee-validate";
 import * as rules from "vee-validate/dist/rules";
 import {
@@ -38,9 +39,10 @@ Vue.component("validation-provider", ValidationProvider);
 Vue.component("validation-observer", ValidationObserver);
 
 axios.defaults.baseURL = "https://sailsaudi.com/api";
-axios.defaults.headers = {"Accept-Language": i18n.locale};
+axios.defaults.headers.common["Accept-Language"]=  i18n.locale 
 
 if (store.state.token) {
+
   axios.defaults.headers.common["Authorization"] =
     "Bearer " + store.state.token;
 }

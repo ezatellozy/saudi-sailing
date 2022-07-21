@@ -25,8 +25,8 @@
               :placeholder="$t('inputs.english_name')"
             />
             <label for="english-name">{{ $t('inputs.english_name') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
+            <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+              {{ $t(`misc.${v.errors[0]}`) }}
             </p>
           </div>
         </validation-provider>
@@ -47,8 +47,8 @@
               :placeholder="$t('inputs.arabic_name')"
             />
             <label for="arabic-name">{{ $t('inputs.arabic_name') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
+            <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+              {{ $t(`misc.${v.errors[0]}`) }}
             </p>
           </div>
         </validation-provider>
@@ -68,8 +68,8 @@
               :placeholder="$t('inputs.birthdate')"
               :format="customFormatter"
             />
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
+            <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+              {{ $t(`misc.${v.errors[0]}`) }}
             </p>
           </div>
         </validation-provider>
@@ -80,16 +80,39 @@
           rules="required|min:3|max:80"
           v-slot="v"
         >
-          <div class="group">
-            <font-awesome-icon class="icon" :icon="['far', 'user']" />
-            <select v-model="gender">
-              <option value="male">{{ $t('inputs.male') }}</option>
-              <option value="female">{{ $t('inputs.female') }}</option>
-            </select>
-            <label>{{ $t('inputs.gender') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
-            </p>
+          <div class="flex items-center">
+            <label
+              class="text-primary font-bold"
+              :class="$i18n.locale == 'ar' ? 'pr-2' : 'pl-2'"
+            >
+              {{ $t('inputs.gender') }} /
+            </label>
+            <div class="radio-group">
+              <!-- <font-awesome-icon class="icon" :icon="['far', 'user']" /> -->
+              <div class="flex items-center">
+                <div class="input-radio">
+                  <input type="radio" v-model="gender" value="male" id="male" />
+                  <label class="form-check-label" for="male">
+                    {{ $t('inputs.male') }}
+                  </label>
+                </div>
+                <div class="input-radio">
+                  <input
+                    type="radio"
+                    v-model="gender"
+                    value="female"
+                    id="female"
+                  />
+                  <label class="form-check-label" for="female">
+                    {{ $t('inputs.female') }}
+                  </label>
+                </div>
+              </div>
+
+              <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+                {{ $t(`misc.${v.errors[0]}`) }}
+              </p>
+            </div>
           </div>
         </validation-provider>
       </div>
@@ -108,8 +131,8 @@
               :placeholder="$t('inputs.nationality')"
             />
             <label>{{ $t('inputs.nationality') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
+            <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+              {{ $t(`misc.${v.errors[0]}`) }}
             </p>
           </div>
         </validation-provider>
@@ -130,8 +153,8 @@
               :placeholder="$t('inputs.identity_number')"
             />
             <label>{{ $t('inputs.identity_number') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
+            <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+              {{ $t(`misc.${v.errors[0]}`) }}
             </p>
           </div>
         </validation-provider>
@@ -142,20 +165,47 @@
           rules="required|min:3|max:80"
           v-slot="v"
         >
-          <div class="group">
-            <font-awesome-icon class="icon" :icon="['far', 'user']" />
-            <select v-model="identityType">
-              <option value="iqama">{{ $t('inputs.iqama') }}</option>
-              <option value="other">{{ $t('inputs.other') }}</option>
-            </select>
-            <label>{{ $t('inputs.identity_type') }}</label>
-            <p class="text-red-500 text-sm text-center">
-              {{ v.errors[0] }}
-            </p>
+          <div class="flex items-center">
+            <label
+              class="text-primary font-bold"
+              :class="$i18n.locale == 'ar' ? 'pr-2' : 'pl-2'"
+            >
+              {{ $t('inputs.identity_type') }} /
+            </label>
+            <div class="radio-group">
+              <!-- <font-awesome-icon class="icon" :icon="['far', 'user']" /> -->
+              <div class="flex items-center">
+                <div class="input-radio">
+                  <input
+                    type="radio"
+                    v-model="identityType"
+                    value="national identity"
+                    id="national identity"
+                  />
+                  <label class="form-check-label" for="national identity">
+                    {{ $t('inputs.national identity') }}
+                  </label>
+                </div>
+                <div class="input-radio">
+                  <input
+                    type="radio"
+                    v-model="identityType"
+                    value="iqama"
+                    id="iqama"
+                  />
+                  <label class="form-check-label" for="iqama">
+                    {{ $t('inputs.iqama') }}
+                  </label>
+                </div>
+              </div>
+              <p class="text-red-500 text-sm text-center" v-if="v.errors[0]">
+                {{ $t(`misc.${v.errors[0]}`) }}
+              </p>
+            </div>
           </div>
         </validation-provider>
       </div>
-      <div class="form-input">
+      <!-- <div class="form-input">
         <validation-provider
           name="identity expiry"
           rules="required|min:3|max:80"
@@ -179,7 +229,7 @@
             </p>
           </div>
         </validation-provider>
-      </div>
+      </div> -->
       <div class="flex justify-center">
         <button
           class="border rounded-xl px-4 py-2 font-bold text-lg bg-secondary text-white border-secondary"
@@ -293,4 +343,36 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.radio-group {
+  padding: 10px 20px;
+  .icon {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: #416f09;
+    font-size: 20px;
+  }
+  .input-radio {
+    padding: 5px 10px;
+    input {
+      width: 1em !important;
+      height: 1em !important;
+      margin-top: 0.25em !important;
+      vertical-align: top !important;
+      background-color: #fff !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      background-size: contain !important;
+    }
+  }
+}
+.is-rtl {
+  .radio-group {
+    padding: 10px 20px;
+    .icon {
+      right: 10px;
+    }
+  }
+}
+</style>

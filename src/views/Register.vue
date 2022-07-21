@@ -34,7 +34,7 @@
             <div class="form-input">
               <validation-provider
                 name="email"
-                rules="required|min:3|max:80"
+                rules="required|min:3"
                 v-slot="v"
               >
                 <div class="group">
@@ -59,7 +59,7 @@
             <div class="form-input">
               <validation-provider
                 name="phone"
-                rules="required|min:3|max:80"
+                rules="required|min:9|max:12"
                 v-slot="v"
               >
                 <div class="group">
@@ -108,7 +108,7 @@
             <div class="form-input">
               <validation-provider
                 name="cPassword"
-                rules="required|min:3|max:80|confirmed:password"
+                rules="required|min:6|max:80|confirmed:password"
                 v-slot="v"
               >
                 <div class="group">
