@@ -19,8 +19,8 @@
         <img src="../assets/1.webp" alt="الاتحاد السعودي للملاحة الشراعية" />
       </div>
       <div class="info-text" :class="scrollSailor ? 'fadeInRight' : ''">
-        <h2>{{ $t('misc.windsurfing') }}</h2>
-        <p>{{ $t('misc.windsurfingdesc') }}</p>
+        <h2>{{ $t('misc.Board Sailing') }}</h2>
+        <p>{{ $t('misc.Board Sailing Sports desc') }}</p>
         <router-link class="btn" to="/kites">
           {{ $t('buttons.readMore') }}
         </router-link>

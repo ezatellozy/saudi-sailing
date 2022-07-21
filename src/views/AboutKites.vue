@@ -14,10 +14,10 @@
         :class="this.$i18n.locale === 'en' ? 'text-left' : 'text-right'"
       >
         <h3 class="font-bold text-2xl text-primary pb-5 m-0">
-          {{ $t('misc.windsurfing') }}
+          {{ $t('misc.Board Sailing') }}
         </h3>
         <p class="leading-6 mt-2 text-primary text-sm font-bold">
-          {{ $t('misc.windsurfingdesc') }}
+          {{ $t('misc.Board Sailing Sports desc') }}
         </p>
       </div>
     </div>
@@ -27,7 +27,8 @@
         :class="this.$i18n.locale === 'en' ? 'text-left' : 'text-right'"
       >
         <h2 class="text-center header">
-          رياضات التزلج الشراعي
+          {{ $t('misc.Board Sailing Sports') }}
+
           <span></span>
         </h2>
         <div class="sports">
@@ -37,12 +38,10 @@
             </div>
             <div class="description w-full md:w-1/2">
               <h2 class="text-lg">
-                رياضة الكايت بورد أو الكايت سيرف (رياضة ركوب الأمواج الشراعية)
+                {{ $t('misc.Kiteboarding or kitesurfing') }}
               </h2>
               <p class="text-md mt-2">
-                هي رياضة فردية تعتمد على العوامل الطبيعية من الرياح وسطح الماء،
-                وهي عبارة عن تزلج على سطح الماء بإستخدام الألواح المخصصة
-                والاعتماد على الرياح للسحب بواسطة شراع مخصص مؤمن و متصل بالراكب
+                {{ $t('misc.Kiteboarding or kitesurfing desc') }}
               </p>
             </div>
           </div>
@@ -52,13 +51,10 @@
             </div>
             <div class="description w-full md:w-1/2">
               <h2 class="text-lg">
-                رياضة الوند سرف
+                {{ $t('misc.windsurfing') }}
               </h2>
               <p class="text-md mt-2">
-                هي احدى رياضات التزلج الشراعي وهي رياضة فردية عبارة عن مزيج من
-                ركوب الأمواج والإبحار الشراعي باستخدام شراع حوالي 2.5 متر متصل
-                بلوح ركوب الأمواج من 2 إلى 3 متر. عندما يلتقط الشراع الرياح تدفع
-                اللوح على سطح الماء
+                {{ $t('misc.windsurfingdesc') }}
               </p>
             </div>
           </div>
